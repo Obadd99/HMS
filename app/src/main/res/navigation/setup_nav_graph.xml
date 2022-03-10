@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/setup_nav_graph.xml"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.developers.healtywise.presentation.setup.splash.SplashFragment"
+        android:label="SplashFragment" >
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.developers.healtywise.presentation.account.login.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.developers.healtywise.presentation.account.register.RegisterFragment"
+        android:label="RegisterFragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_passwordSignupFragment"
+            app:destination="@id/passwordSignupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/passwordSignupFragment"
+        android:name="com.developers.healtywise.presentation.account.password.PasswordSignupFragment"
+        android:label="PasswordSignupFragment" >
+        <argument
+            android:name="user"
+            app:argType="com.developers.healtywise.domin.models.account.User" />
+    </fragment>
+</navigation>

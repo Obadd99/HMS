@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph.xml"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.developers.healtywise.presentation.main.home.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/messageFragment"
+        android:name="com.developers.healtywise.presentation.main.message.MessageFragment"
+        android:label="MessageFragment" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.developers.healtywise.presentation.main.search.SearchFragment"
+        android:label="SearchFragment" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.developers.healtywise.presentation.main.settings.SettingFragment"
+        android:label="SettingFragment" >
+        <action
+            android:id="@+id/action_settingFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.developers.healtywise.presentation.account.editProfile.EditProfileFragment"
+        android:label="EditProfileFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.developers.healtywise.presentation.account.userProfile.ProfileFragment"
+        android:label="ProfileFragment" />
+</navigation>

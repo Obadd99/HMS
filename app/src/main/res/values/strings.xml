@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Healtywise</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_your_password"><u>Forgot your password?</u></string>
+    <string name="log_in">LOGIN</string>
+    <string name="have_an_account">Don’t have an account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="birth_of_date">Birth Date</string>
+    <string name="doctor">Doctor</string>
+    <string name="others">Others..</string>
+    <string name="by_tapping_sign_up_accept_you_acknowledge_that_you_have_read_the_privacy_policy_and_agree_to_the_terms_of_service">By tapping “ Sign Up &amp; Accept ’ ,You \nacknowledge that you have read <font color='#303F9F'><b>the Privacy  \nPolicy</b></font> and agree to <font color='#303F9F'><b>the Terms of Service</b></font>.</string>
+    <string name="next">Next</string>
+    <string name="Female">Female</string>
+    <string name="Male">Male</string>
+    <string name="gender">Gender</string>
+    <string name="general">General</string>
+    <string name="terms_conditions"><![CDATA[Terms & Conditions]]></string>
+    <string name="help">Help</string>
+    <string name="invite_a_friend">Invite a friend</string>
+    <string name="logout">Logout</string>
+    <string name="read_external_storage_message_permissions">you need to accept Read external storage permissions to use this Option.</string>
+    <string name="create_account">Create Account</string>
+    <string name="includes_1_number">Includes 1 number and 1 special character</string>
+    <string name="your_password_needs_to_be_at_least">Your password needs to be at least</string>
+    <string name="_6_characters_long_no_white_spaces">6 characters long, no white spaces</string>
+    <string name="includes_1_uppercase_and_1_lowercase">Includes 1 uppercase and 1 lowercase</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up_btn">SiGN UP</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="personal_info">Personal Info</string>
+    <string name="work_imprevement_service"><b><u><font color='#303F9F'>W</font></u></b>ork <font color='#303F9F'><b><u>I</u></b></font>mprovement <font color='#303F9F'><b><u>S</u></b></font>ervice</string>
+    <string name="update">Update</string>
+    <array name="itemsJob">
+        <item>@string/doctor</item>
+        <item>@string/others</item>
+    </array>
+</resources>
