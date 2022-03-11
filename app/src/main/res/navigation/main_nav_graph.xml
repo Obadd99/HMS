@@ -11,15 +11,26 @@
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/messageFragment"
         android:name="com.developers.healtywise.presentation.main.message.MessageFragment"
-        android:label="MessageFragment" />
+        android:label="MessageFragment" >
+        <action
+            android:id="@+id/action_messageFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.developers.healtywise.presentation.main.search.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.developers.healtywise.presentation.main.settings.SettingFragment"
@@ -36,4 +47,12 @@
         android:id="@+id/profileFragment"
         android:name="com.developers.healtywise.presentation.account.userProfile.ProfileFragment"
         android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.developers.healtywise.presentation.main.chat.ChatFragment"
+        android:label="ChatFragment" >
+        <argument
+            android:name="user"
+            app:argType="com.developers.healtywise.domin.models.account.User" />
+    </fragment>
 </navigation>

@@ -21,7 +21,7 @@ object ViewModelHilt {
     @SuppressLint("NewApi")
     @ViewModelScoped
     @Provides
-    fun provideSimpleDateFormat(): SimpleDateFormat = SimpleDateFormat("yyyy/MM/dd h:mm", Locale.US)
+    fun provideSimpleDateFormat(): SimpleDateFormat = SimpleDateFormat("EEE, d MMM yyyy hh:mm aaa", Locale.US)
 
 
     @ViewModelScoped

@@ -19,7 +19,7 @@ data class User(
      val birthDate: String= "",
      val doctor: Boolean= false,
      val male: Boolean= false,
-     @Exclude
+     @get:Exclude
      val imageProfileUploaded: String?=null,
 ):Parcelable {
      override fun describeContents(): Int {

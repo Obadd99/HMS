@@ -2,20 +2,25 @@ package com.developers.healtywise.data.netWork.account
 
 import android.net.Uri
 import android.util.Log
+import com.developers.healtywise.common.helpers.Resource
 import com.developers.healtywise.domin.models.account.User
 import com.developers.healtywise.common.helpers.utils.Constants.HOLDER_ICON
+import com.developers.healtywise.common.helpers.utils.Constants.POSTS
 import com.developers.healtywise.common.helpers.utils.Constants.USERS
+import com.developers.healtywise.domin.models.main.Post
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
+import java.util.*
 import javax.inject.Inject
 
 class AccountService @Inject constructor(
     private val auth: FirebaseAuth,
 ) {
     private val users = FirebaseFirestore.getInstance().collection(USERS)
+    private val posts = FirebaseFirestore.getInstance().collection(POSTS)
     private val storage = Firebase.storage
 
     suspend fun register(
@@ -27,18 +32,18 @@ class AccountService @Inject constructor(
         birthdate: String,
         doctor: Boolean,
         male: Boolean,
-        imageUri: String?
-        ): User {
+        imageUri: String?,
+    ): User {
         val result = auth.createUserWithEmailAndPassword(email, password).await()
         val uid = result.user?.uid!!
-        var imageURL =HOLDER_ICON
+        var imageURL = HOLDER_ICON
         imageUri?.let {
             val imageUploadResult =
                 storage.getReference(email).putFile(Uri.parse(it)).await()
-             imageURL =
+            imageURL =
                 imageUploadResult?.metadata?.reference?.downloadUrl?.await().toString()
         }
-        val user = User(uid, firstName, lastName, email, mobile, imageURL,birthdate,doctor,male)
+        val user = User(uid, firstName, lastName, email, mobile, imageURL, birthdate, doctor, male)
         users.document(uid).set(user).await()
         return user
     }
@@ -57,6 +62,61 @@ class AccountService @Inject constructor(
             Log.i("TAG", "login:3 ")
             User()
         }
+    }
+
+    suspend fun createPost(text: String): Any {
+        val uid = auth.currentUser!!.uid
+        val postId = UUID.randomUUID().toString()
+        val post = Post(
+            id = postId,
+            authorUid = uid,
+            text = text,
+            date = System.currentTimeMillis()
+        )
+        posts.document(postId).set(post).await()
+
+        return Any()
+    }
+
+    suspend fun deletingPost(post: Post): Post {
+        posts.document(post.id).delete().await()
+//            storage.getReferenceFromUrl(post.imageUrl).delete().await()
+        return post
+    }
+
+    suspend fun searchDoctorUser(query: String): List<User> {
+        val userResult = if (query.isNotEmpty()) {
+            users
+                .whereGreaterThanOrEqualTo("firstName", query)
+                .whereEqualTo("doctor", true)
+                .get().await().toObjects(User::class.java)
+        } else {
+            users.whereEqualTo("doctor", true).get().await().toObjects(User::class.java)
+        }
+
+        return userResult
+    }
+
+    suspend fun getUser(uid: String): User {
+        val user = users.document(uid).get().await().toObject(User::class.java)
+            ?: throw  IllegalStateException()
+//        val currentUid = FirebaseAuth.getInstance().uid!!
+//        val currentUser = users.document(currentUid).get().await().toObject(User::class.java)
+//            ?: throw  IllegalStateException()
+        return user
+    }
+
+    suspend fun getPosts(): List<Post> {
+        val allposts =
+            posts.orderBy("date", com.google.firebase.firestore.Query.Direction.DESCENDING)
+                .get().await().toObjects(Post::class.java)
+                .onEach { post ->
+                    val user = getUser(post.authorUid)
+                    post.authorProfilePictureUrl = user.imageProfile
+                    post.authorUsername = "${user.firstName} ${user.lastName}"
+                }
+
+        return allposts
     }
 
 

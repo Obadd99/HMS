@@ -8,15 +8,19 @@
         <entry key="..\:/Healtywise/app/src/main/res/drawable/background_popup_spinner.xml" value="0.2305" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/background_select_items_home.xml" value="0.162" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/background_spinner.xml" value="0.2305" />
+        <entry key="..\:/Healtywise/app/src/main/res/drawable/background_upload_id_white.xml" value="0.162" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/checkbox_background.xml" value="0.2305" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/ic_arrow_back.xml" value="0.162" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/ic_arrow_dropdown.xml" value="0.2305" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/ic_arrow_round_back.xml" value="0.2305" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.162" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/ic_checked_box.xml" value="0.2305" />
+        <entry key="..\:/Healtywise/app/src/main/res/drawable/ic_date.xml" value="0.162" />
+        <entry key="..\:/Healtywise/app/src/main/res/drawable/ic_empty_view.xml" value="0.162" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/ic_floating_send.xml" value="0.162" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/ic_home.xml" value="0.162" />
-        <entry key="..\:/Healtywise/app/src/main/res/drawable/ic_image.xml" value="0.2305" />
+        <entry key="..\:/Healtywise/app/src/main/res/drawable/ic_icon_feather_upload.xml" value="0.162" />
+        <entry key="..\:/Healtywise/app/src/main/res/drawable/ic_image.xml" value="0.2" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/ic_message.xml" value="0.162" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/ic_setting.xml" value="0.162" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/ic_unchecked_box.xml" value="0.2305" />
@@ -30,13 +34,19 @@
         <entry key="..\:/Healtywise/app/src/main/res/layout/fragment_message.xml" value="0.20607097050021378" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/fragment_search.xml" value="0.20607097050021378" />
+        <entry key="..\:/Healtywise/app/src/main/res/layout/fragment_search_doctor.xml" value="0.20346137610806247" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/fragment_setting.xml" value="0.20607097050021378" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/fragment_sign_up_creation_data.xml" value="0.22" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/fragment_sign_up_password.xml" value="0.33" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/fragment_splash.xml" value="0.25" />
+        <entry key="..\:/Healtywise/app/src/main/res/layout/item_add_post_layout.xml" value="0.25" />
+        <entry key="..\:/Healtywise/app/src/main/res/layout/item_posts_doctor.xml" value="0.20346137610806247" />
+        <entry key="..\:/Healtywise/app/src/main/res/layout/item_user_search.xml" value="0.20607097050021378" />
+        <entry key="..\:/Healtywise/app/src/main/res/layout/layout_empty_view.xml" value="0.20607097050021378" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/layout_spinner_categories.xml" value="0.25104166666666666" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/logout_dialog_layout.xml" value="0.20607097050021378" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/my_drop_down_item.xml" value="1.25" />
+        <entry key="..\:/Healtywise/app/src/main/res/layout/post_item_list.xml" value="0.25" />
       </map>
     </option>
   </component>

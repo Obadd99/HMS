@@ -11,6 +11,8 @@ import com.developers.healtywise.di.qualifiers.IOThread
 import com.developers.healtywise.di.qualifiers.MainThread
 import com.developers.healtywise.domin.repository.AccountRepository
 import com.developers.healtywise.R
+import com.developers.healtywise.data.netWork.repository.MainRepositoryImpl
+import com.developers.healtywise.domin.repository.MainRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
@@ -70,6 +72,13 @@ object AppModel {
     fun provideAccountRepository(account: AccountService, auth: FirebaseAuth): AccountRepository {
         return AccountRepositoryImpl(account,auth)
     }
+
+    @Provides
+    @Singleton
+    fun provideMainRepository(account: AccountService, auth: FirebaseAuth): MainRepository {
+        return MainRepositoryImpl(account,auth)
+    }
+
    @Provides
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth {

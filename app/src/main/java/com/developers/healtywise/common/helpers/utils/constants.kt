@@ -21,6 +21,7 @@ object Constants {
 
     const val USERS_INFO_FILE: String = "USER_INFO"
     const val USERS: String = "Users"
+    const val POSTS: String = "Posts"
 
 
 
@@ -61,6 +62,7 @@ object Constants {
     const val LOCATION_UPDATE_INTERVAL = 5000L
     const val FASTEST_LOCATION_INTERVAL = 2000L
     const val TIMER_UPDATE_INTERVAL = 500L
+    const val SEARCH_TIME_DELAY = 500L
 
 
 

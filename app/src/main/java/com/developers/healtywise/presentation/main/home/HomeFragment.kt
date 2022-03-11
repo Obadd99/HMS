@@ -6,42 +6,121 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.RequestManager
+import com.developers.healtywise.common.helpers.AddPostCommunicationHelper
 import com.developers.healtywise.common.helpers.UICommunicationHelper
+import com.developers.healtywise.common.helpers.utils.snackbar
 import com.developers.healtywise.data.local.dataStore.DataStoreManager
 import com.developers.healtywise.databinding.FragmentHomeBinding
-import com.developers.healtywise.databinding.FragmentLoginBinding
-import com.developers.healtywise.databinding.FragmentSplashBinding
+import com.developers.healtywise.presentation.activities.MainActivity
+import com.developers.healtywise.presentation.main.home.adapter.PostsAdapter
+import com.developers.healtywise.presentation.main.search.adapter.DoctorAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), AddPostCommunicationHelper {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var uiCommunicationListener: UICommunicationHelper
+    private lateinit var addPostCommunicationHelper: AddPostCommunicationHelper
 
     private val navController by lazy { findNavController() }
 
+    private val homeViewModel: HomeViewModel by viewModels()
+
     @Inject
     lateinit var dataStoreManager: DataStoreManager
+
+    @Inject
+    lateinit var postAdapter: PostsAdapter
 
     @Inject
     lateinit var glide: RequestManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        homeViewModel.getPosts()
+        setWelcomeMessageForUser()
+        loadUserInfo()
+        setupFragmentActions()
+        subscribeTOGetPostsDoctor()
+        setupRecyclerViewPosts()
+
+
+    }
+
+    private fun subscribeTOGetPostsDoctor() {
+        lifecycleScope.launchWhenStarted {
+            homeViewModel.getPostState.collect {
+                Log.i("GAMALRAGAB", "subscribeTOGetPostsDoctor: ${it.toString()}")
+                if (it.isLoading) uiCommunicationListener.isLoading(loading = true,
+                    mainActivity = true) else uiCommunicationListener.isLoading(loading = false,
+                    mainActivity = true)
+
+                it.data?.let {
+                    postAdapter.posts = it
+                    binding.layoutEmptyView.emptyView.isVisible = it.isEmpty()
+                }
+                it.error?.let {
+                    binding.layoutEmptyView.emptyView.isVisible = true
+                    binding.layoutEmptyView.textEmptyErr.text = it
+                    snackbar(it)
+                }
+            }
+        }
+    }
+
+    private fun loadUserInfo() {
         lifecycleScope.launchWhenStarted {
             dataStoreManager.getUserProfile().collect {
                 glide.load(it.imageProfile).into(binding.icProfile)
+                binding.icAddImg.isVisible = it.doctor
             }
         }
+    }
+
+    private fun setupFragmentActions() {
         binding.icProfile.setOnClickListener {
-            val action=HomeFragmentDirections.actionHomeFragmentToProfileFragment()
+            val action = HomeFragmentDirections.actionHomeFragmentToProfileFragment()
             navController.navigate(action)
+        }
+
+        binding.icAddImg.setOnClickListener {
+            addPostCommunicationHelper.uploadPost()
+        }
+        binding.etSearch.setOnClickListener {
+            (requireActivity() as MainActivity).setupBottomNavClicked(icNotification = true)
+        }
+
+
+    }
+
+    private fun setWelcomeMessageForUser() {
+        val c: Calendar = Calendar.getInstance()
+        val timeOfDay: Int = c.get(Calendar.HOUR_OF_DAY)
+
+        when (timeOfDay) {
+            in 0..11 -> {
+                binding.welcomeMessageTv.text = "Good Morning"
+            }
+            in 12..15 -> {
+                binding.welcomeMessageTv.text = "Good Afternoon"
+            }
+            in 16..20 -> {
+                binding.welcomeMessageTv.text = "Good Evening"
+            }
+            in 21..23 -> {
+                binding.welcomeMessageTv.text = "Good Night"
+            }
         }
     }
 
@@ -65,8 +144,21 @@ class HomeFragment : Fragment() {
         super.onAttach(context)
         try {
             uiCommunicationListener = context as UICommunicationHelper
+            addPostCommunicationHelper = context as AddPostCommunicationHelper
         } catch (e: ClassCastException) {
             Log.e("AppDebug", "onAttach: $context must implement UICommunicationListener")
         }
     }
+
+    private fun setupRecyclerViewPosts() = binding.notesRecyclerView.apply {
+        itemAnimator = null
+        isNestedScrollingEnabled = true
+        layoutManager = LinearLayoutManager(requireContext())
+        adapter = postAdapter
+    }
+
+    override fun uploadPost() {
+
+    }
+
 }

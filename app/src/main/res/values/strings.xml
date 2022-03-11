@@ -12,6 +12,8 @@
     <string name="birth_of_date">Birth Date</string>
     <string name="doctor">Doctor</string>
     <string name="others">Others..</string>
+    <string name="type_your_massage_here">type your massage here…</string>
+    <string name="mobile_username_email">Mobile , username , email</string>
     <string name="by_tapping_sign_up_accept_you_acknowledge_that_you_have_read_the_privacy_policy_and_agree_to_the_terms_of_service">By tapping “ Sign Up &amp; Accept ’ ,You \nacknowledge that you have read <font color='#303F9F'><b>the Privacy  \nPolicy</b></font> and agree to <font color='#303F9F'><b>the Terms of Service</b></font>.</string>
     <string name="next">Next</string>
     <string name="Female">Female</string>
@@ -34,6 +36,8 @@
     <string name="personal_info">Personal Info</string>
     <string name="work_imprevement_service"><b><u><font color='#303F9F'>W</font></u></b>ork <font color='#303F9F'><b><u>I</u></b></font>mprovement <font color='#303F9F'><b><u>S</u></b></font>ervice</string>
     <string name="update">Update</string>
+    <string name="message">Message</string>
+    <string name="upload_post">Upload Post</string>
     <array name="itemsJob">
         <item>@string/doctor</item>
         <item>@string/others</item>

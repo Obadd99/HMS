@@ -1,13 +1,14 @@
 package com.developers.healtywise.presentation.activities
 
-import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.ImageViewCompat
@@ -15,26 +16,31 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.developers.healtywise.R
+import com.developers.healtywise.common.helpers.AddPostCommunicationHelper
 import com.developers.healtywise.common.helpers.UICommunicationHelper
-import com.developers.healtywise.common.helpers.utils.Constants.ACTION_LOGIN_FRAGMENT_AFTER_LOGOUT
+import com.developers.healtywise.common.helpers.dialog.CustomDialog
+import com.developers.healtywise.common.helpers.utils.Constants.TAG
+import com.developers.healtywise.common.helpers.utils.snackbar
 import com.developers.healtywise.common.helpers.utils.statusBar
 import com.developers.healtywise.data.local.dataStore.DataStoreManager
 import com.developers.healtywise.databinding.ActivityMainBinding
+import com.developers.healtywise.presentation.main.home.HomeViewModel
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.async
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), UICommunicationHelper {
+class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunicationHelper {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
     @Inject
     lateinit var dataStoreManager: DataStoreManager
+    private val homeViewModel: HomeViewModel by viewModels()
 
     @Inject
     lateinit var authInstance: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -49,28 +55,23 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper {
         setupVisibilityOfBottomNavigation()
 
         itemBottomNavigationClicked(navController)
-//
-//        binding.logoutTv.setOnClickListener {
-//            CustomDialog.showDialogForLogout(
-//                this@MainActivity
-//            ) {
-//                logout()
-//            }
-//        }
+
+        subscriptToCreatePostState()
 
     }
+
 
     private fun setupVisibilityOfBottomNavigation() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             hideMyProgress()
             when (destination.id) {
                 R.id.editProfileFragment,
-                R.id.profileFragment,-> {
+                R.id.profileFragment,
+                -> {
                     hideBottomNavigation()
-                    hideMyProgress()
-                }else -> {
+                }
+                else -> {
                     showBottomNavigation()
-                    hideMyProgress()
                 }
             }
         }
@@ -94,7 +95,7 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper {
         }
 
         binding.icFloatingSend.setOnClickListener {
-
+            uploadPost()
         }
 
         binding.icSearch.setOnClickListener {
@@ -112,7 +113,7 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper {
     }
 
 
-    private fun setupBottomNavClicked(
+    open fun setupBottomNavClicked(
         icHome: Boolean = false,
         icMessage: Boolean = false,
         icNotification: Boolean = false,
@@ -223,42 +224,53 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper {
     }
 
     private fun showMyProgress() {
-
         binding.layoutProgressView.isVisible = true
         window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-
+        Log.i(TAG, "showMyProgress: ")
     }
 
     private fun hideMyProgress() {
         binding.layoutProgressView.isVisible = false
         window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        Log.i(TAG, "hideMyProgress: ")
+
     }
 
     fun myProgressState(): Boolean = binding.layoutProgressView.isVisible
 
-    private fun logout() {
-        lifecycleScope.launchWhenStarted {
-            async {
-                authInstance.signOut()
-                dataStoreManager.logOut()
-            }.await()
-            navigateToSetupActivity()
-
-        }
-    }
-
-    private fun navigateToSetupActivity() {
-        startActivity(
-            Intent(this, SetupActivity::class.java)
-                .setAction(ACTION_LOGIN_FRAGMENT_AFTER_LOGOUT)
-        )
-        finish()
-    }
 
     override fun isLoading(loading: Boolean, mainActivity: Boolean) {
         if (mainActivity) {
             if (loading) showMyProgress() else hideMyProgress()
+        }
+    }
+
+    override fun uploadPost() {
+        lifecycleScope.launchWhenStarted {
+            dataStoreManager.getUserProfile().collect {
+                if (it.doctor) {
+                    CustomDialog.showDialogForAddPost(this@MainActivity) {
+                        homeViewModel.createPost(it)
+                    }
+                } else {
+                }
+            }
+        }
+    }
+
+    private fun subscriptToCreatePostState() {
+        lifecycleScope.launchWhenStarted {
+            homeViewModel.createPostStateCreatePost.collect {
+                it.data?.let {
+                    binding.root snackbar ("Success Uploaded")
+                    navController.navigate(R.id.homeFragment)
+                }
+                if (it.isLoading) showMyProgress() else hideMyProgress()
+                it.error?.let {
+                    binding.root snackbar (it)
+                }
+            }
         }
     }
 }
