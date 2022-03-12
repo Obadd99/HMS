@@ -2,14 +2,18 @@ package com.developers.healtywise.data.netWork.account
 
 import android.net.Uri
 import android.util.Log
-import com.developers.healtywise.common.helpers.Resource
 import com.developers.healtywise.domin.models.account.User
 import com.developers.healtywise.common.helpers.utils.Constants.HOLDER_ICON
+import com.developers.healtywise.common.helpers.utils.Constants.MESSAGES
 import com.developers.healtywise.common.helpers.utils.Constants.POSTS
+import com.developers.healtywise.common.helpers.utils.Constants.TAG
 import com.developers.healtywise.common.helpers.utils.Constants.USERS
+import com.developers.healtywise.domin.models.main.ChatMessage
 import com.developers.healtywise.domin.models.main.Post
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
@@ -21,6 +25,7 @@ class AccountService @Inject constructor(
 ) {
     private val users = FirebaseFirestore.getInstance().collection(USERS)
     private val posts = FirebaseFirestore.getInstance().collection(POSTS)
+    private val messages = FirebaseFirestore.getInstance().collection(MESSAGES)
     private val storage = Firebase.storage
 
     suspend fun register(
@@ -87,7 +92,7 @@ class AccountService @Inject constructor(
     suspend fun searchDoctorUser(query: String): List<User> {
         val userResult = if (query.isNotEmpty()) {
             users
-                .whereGreaterThanOrEqualTo("firstName", query)
+                .whereLessThanOrEqualTo("firstName", query)
                 .whereEqualTo("doctor", true)
                 .get().await().toObjects(User::class.java)
         } else {
@@ -115,9 +120,44 @@ class AccountService @Inject constructor(
                     post.authorProfilePictureUrl = user.imageProfile
                     post.authorUsername = "${user.firstName} ${user.lastName}"
                 }
-
         return allposts
     }
 
 
+    suspend fun sendMessage(message: String, receiverId: String): Any {
+        val uid = auth.currentUser!!.uid
+        val messageId = UUID.randomUUID().toString()
+        val messageChat = ChatMessage(
+            id = messageId,
+            date = System.currentTimeMillis(),
+            sendId = uid,
+            receiverId = receiverId,
+            message = message
+        )
+        messages.document(messageId).set(messageChat).await()
+        Log.i(TAG, "sendMessage: ")
+        return Any()
+    }
+
+    fun getMessage(messages: List<ChatMessage>): List<ChatMessage> = messages
+
+    fun addMessageHotSnap(sendId: String, receiverId: String) {
+        getMessage(emptyList())
+        messages.orderBy("date", com.google.firebase.firestore.Query.Direction.DESCENDING)
+            .whereEqualTo("sendId", sendId)
+            .whereEqualTo("receiverId", receiverId)
+            .addSnapshotListener(messageListener)
+        messages.orderBy("date", com.google.firebase.firestore.Query.Direction.DESCENDING)
+            .whereEqualTo("sendId", receiverId)
+            .whereEqualTo("receiverId", sendId)
+            .addSnapshotListener(messageListener)
+    }
+
+    private val messageListener: EventListener<QuerySnapshot> = EventListener { value, error ->
+        value?.let {
+            Log.i(TAG, "EventListener:${it.toString()} ")
+            val messages = it.toObjects(ChatMessage::class.java)
+            getMessage(messages)
+        }
+    }
 }

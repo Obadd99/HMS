@@ -22,6 +22,7 @@ object Constants {
     const val USERS_INFO_FILE: String = "USER_INFO"
     const val USERS: String = "Users"
     const val POSTS: String = "Posts"
+    const val MESSAGES: String = "Chats"
 
 
 

@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
             when (destination.id) {
                 R.id.editProfileFragment,
                 R.id.profileFragment,
+                R.id.chatFragment,
                 -> {
                     hideBottomNavigation()
                 }
