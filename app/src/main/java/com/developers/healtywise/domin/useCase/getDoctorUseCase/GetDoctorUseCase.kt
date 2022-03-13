@@ -14,11 +14,13 @@ class GetDoctorUseCase @Inject constructor(
     private val mainRepository: MainRepository,
 ) {
     operator fun invoke(
-        query:String=""
+        query:String="",currentUserId:String,userDoctor:Boolean=false
     ): Flow<Resource<List<User>>> = flow {
         emit(Resource.Loading())
         val result = safeCall {
-            val createData = mainRepository.getUsers(query)
+            val createData = mainRepository.getUsers(query,userDoctor).filter {
+                it.userId!=currentUserId
+            }
             Resource.Success(createData)
         }
         emit(result)

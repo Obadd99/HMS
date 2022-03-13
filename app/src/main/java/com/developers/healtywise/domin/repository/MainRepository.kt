@@ -7,7 +7,7 @@ import com.developers.healtywise.domin.models.main.Post
 
 interface MainRepository {
     suspend fun createPost(text:String): Any
-    suspend fun getUsers(username:String):List<User>
+    suspend fun getUsers(username:String,userDoctor:Boolean):List<User>
     suspend fun getUser(uid:String):User
     suspend fun getPosts():List<Post>
     suspend fun sendMessage(message:String, receiverId:String):Any

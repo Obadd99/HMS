@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -22,14 +23,17 @@ import com.developers.healtywise.data.local.dataStore.DataStoreManager
 import com.developers.healtywise.databinding.FragmentChatBinding
 import com.developers.healtywise.domin.models.main.ChatMessage
 import com.developers.healtywise.presentation.main.chat.adapter.ChatAdapter
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import java.lang.reflect.Array
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
@@ -48,51 +52,66 @@ class ChatFragment : Fragment() {
 
     @Inject
     lateinit var chatAdapter: ChatAdapter
+    private val chatsList: ArrayList<ChatMessage> by lazy {
+        ArrayList<ChatMessage>()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
         lifecycleScope.launchWhenStarted {
             uiCommunicationListener.isLoading(true)
-            dataStoreManager.getUserProfile().collect{
-                chatAdapter.senderId=it.userId
-               // sendMessageViewModel.getMessage(args.user.imageProfile,it.userId,args.user.userId)
+            dataStoreManager.getUserProfile().collect {
+                chatAdapter.senderId = it.userId
+                // sendMessageViewModel.getMessage(args.user.imageProfile,it.userId,args.user.userId)
                 uiCommunicationListener.isLoading(false)
-                addMessageHotSnap(it.userId,args.user.userId)
+                addMessageHotSnap(it.userId, args.user.userId)
             }
         }
+
         setListenerActions()
         loadUserReceivedDetials()
         setupRecyclerViewMessages()
         subscribeToMessagesState()
         subscribeToSendMessagesState()
-
+        binding.etMessage.doAfterTextChanged {
+            binding.chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
+        }
     }
 
     private fun addMessageHotSnap(sendId: String, receiverId: String) {
         val messages = FirebaseFirestore.getInstance().collection(Constants.MESSAGES)
-        messages.orderBy("date", com.google.firebase.firestore.Query.Direction.ASCENDING)
-            .whereEqualTo("sendId", sendId)
+        messages.whereEqualTo("sendId", sendId)
             .whereEqualTo("receiverId", receiverId)
             .addSnapshotListener(messageListener)
-        messages.orderBy("date", com.google.firebase.firestore.Query.Direction.ASCENDING)
-            .whereEqualTo("sendId", receiverId)
+        messages.whereEqualTo("sendId", receiverId)
             .whereEqualTo("receiverId", sendId)
             .addSnapshotListener(messageListener)
     }
+
     private val messageListener: EventListener<QuerySnapshot> = EventListener { value, error ->
         value?.let {
             Log.i(TAG, "EventListener:${it.toString()} ")
-            val messages = it.toObjects(ChatMessage::class.java)
-
-            messages.onEach {
-                it.dateTimeMessage = SimpleDateFormat("EEE, d MMM yyyy hh:mm aaa", Locale.US).format(Date(it.date))
-                it.receiverProfilePictureUrl=args.user.imageProfile
-                it.message= decodeByte(it.message)
+            // val messages = it.toObjects(ChatMessage::class.java)
+            it.documentChanges.forEach {
+                if (it.type == DocumentChange.Type.ADDED) {
+                    val message = it.document.toObject(ChatMessage::class.java)
+                    message.also {
+                        it.dateTimeMessage =
+                            SimpleDateFormat("EEE, d MMM yyyy hh:mm aaa",
+                                Locale.US).format(Date(it.date))
+                        it.receiverProfilePictureUrl = args.user.imageProfile
+                        it.message = decodeByte(it.message)
+                    }
+                    chatsList.add(message)
+                }
             }
-            chatAdapter.messages=messages
+            chatsList.sortBy { it.date }
+            chatAdapter.messages = chatsList
+            binding.chatRecyclerView.scrollToPosition(chatAdapter.messages.size - 1)
         }
     }
+
     private fun subscribeToSendMessagesState() {
         lifecycleScope.launchWhenStarted {
             sendMessageViewModel.sendMessagedState.collect {
@@ -110,7 +129,7 @@ class ChatFragment : Fragment() {
                     snackbar(it)
                 }
                 it.data?.let {
-                    chatAdapter.messages=it
+                    chatAdapter.messages = it
                 }
             }
         }
@@ -132,15 +151,15 @@ class ChatFragment : Fragment() {
             navController.popBackStack()
         }
         binding.sendLayout.setOnClickListener {
-            val message = binding.etMessage.text.toString()
+            val message = binding.etMessage.text.toString().trim()
             if (message.isNotEmpty()) {
                 val messageEncoded = encodeKey(message)
-                sendMessage(messageEncoded,args.user.userId)
+                sendMessage(messageEncoded, args.user.userId)
             }
         }
     }
 
-    private fun sendMessage(messageEncoded: String, receiverId:String) {
+    private fun sendMessage(messageEncoded: String, receiverId: String) {
         Log.i(TAG, "sendMessage: ${messageEncoded}")
         sendMessageViewModel.sendMessage(messageEncoded, receiverId)
         binding.etMessage.setText("")
@@ -159,6 +178,11 @@ class ChatFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     override fun onAttach(context: Context) {

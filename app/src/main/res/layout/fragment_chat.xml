@@ -86,8 +86,8 @@
         android:clipToPadding="false"
         android:overScrollMode="never"
         app:stackFromEnd="true"
-        android:padding="@dimen/_20sdp"
-
+        app:layoutManager="LinearLayoutManager"
+        android:padding="@dimen/_10sdp"
         />
 <!--    <ProgressBar-->
 <!--        android:layout_width="wrap_content"-->

@@ -66,7 +66,7 @@ class EditProfileFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        uiCommunicationListener.isLoading(loading = false, mainActivity = true)
+
         _binding = null
     }
 

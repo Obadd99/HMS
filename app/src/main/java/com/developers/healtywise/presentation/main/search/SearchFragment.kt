@@ -20,6 +20,7 @@ import com.developers.healtywise.common.helpers.utils.Constants.TAG
 import com.developers.healtywise.common.helpers.utils.snackbar
 import com.developers.healtywise.data.local.dataStore.DataStoreManager
 import com.developers.healtywise.databinding.FragmentSearchDoctorBinding
+import com.developers.healtywise.domin.models.account.User
 import com.developers.healtywise.presentation.main.search.adapter.DoctorAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -40,11 +41,17 @@ class SearchFragment:Fragment() {
     @Inject
     lateinit var dataStoreManager: DataStoreManager
     private var job: Job? = null
+    private var userInfo:User?=null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchViewModel.getDoctors()
+        lifecycleScope.launchWhenStarted {
+            dataStoreManager.getUserProfile().collect {
+                userInfo = it
+                searchViewModel.getDoctorsOrNormalUsers(currentUserId = it.userId, userDoctor = it.doctor)
+            }
+        }
         setupFragmentActions()
         subscribeTOGetDoctors()
         setupRecyclerViewPosts()
@@ -92,10 +99,12 @@ class SearchFragment:Fragment() {
             job = lifecycleScope.launch {
                 delay(SEARCH_TIME_DELAY)
                 text?.let {
-                    if (it.isNotEmpty()) {
-                        searchViewModel.getDoctors(it.toString())
-                    }else{
-                        searchViewModel.getDoctors()
+                    userInfo?.let {currentUser->
+                        if (it.isNotEmpty()) {
+                            searchViewModel.getDoctorsOrNormalUsers(it.toString(),currentUser.userId, userDoctor = currentUser.doctor)
+                        } else {
+                            searchViewModel.getDoctorsOrNormalUsers(currentUserId = currentUser.userId, userDoctor = currentUser.doctor)
+                        }
                     }
                 }
             }

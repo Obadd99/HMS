@@ -18,7 +18,7 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun createPost(text: String): Any = account.createPost(text)
 
 
-    override suspend fun getUsers(username: String): List<User> = account.searchDoctorUser(username)
+    override suspend fun getUsers(username: String,userDoctor:Boolean): List<User> = account.searchDoctorUser(username)
 
     override suspend fun getUser(uid: String): User = account.getUser(uid)
 

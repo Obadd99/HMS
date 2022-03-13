@@ -27,10 +27,12 @@ class SearchViewModel @Inject constructor(
     private val _getDoctorState = Channel<SearchUiState>()
     val getDoctorState: Flow<SearchUiState> = _getDoctorState.receiveAsFlow()
 
-    fun getDoctors(
+    fun getDoctorsOrNormalUsers(
         query: String="",
+        currentUserId:String,
+        userDoctor:Boolean=false
     ) {
-        getDoctorUseCase(query).onEach {
+        getDoctorUseCase(query,currentUserId,userDoctor).onEach {
             when (it) {
                 is Resource.Success -> {
                     _getDoctorState.send(SearchUiState(data = it.data!!))

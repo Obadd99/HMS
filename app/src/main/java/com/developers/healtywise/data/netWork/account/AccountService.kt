@@ -89,11 +89,10 @@ class AccountService @Inject constructor(
         return post
     }
 
-    suspend fun searchDoctorUser(query: String): List<User> {
+    suspend fun searchDoctorUser(query: String,userDoctor:Boolean=false): List<User> {
         val userResult = if (query.isNotEmpty()) {
-            users
-                .whereLessThanOrEqualTo("firstName", query)
-                .whereEqualTo("doctor", true)
+            users.whereLessThanOrEqualTo("firstName", query)
+                .whereEqualTo("doctor", userDoctor)
                 .get().await().toObjects(User::class.java)
         } else {
             users.whereEqualTo("doctor", true).get().await().toObjects(User::class.java)
@@ -122,7 +121,6 @@ class AccountService @Inject constructor(
                 }
         return allposts
     }
-
 
     suspend fun sendMessage(message: String, receiverId: String): Any {
         val uid = auth.currentUser!!.uid

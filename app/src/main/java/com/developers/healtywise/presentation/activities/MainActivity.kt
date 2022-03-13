@@ -64,6 +64,11 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
     private fun setupVisibilityOfBottomNavigation() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             hideMyProgress()
+
+            setupBottomNavClicked(icHome = destination.id == R.id.homeFragment,
+                icMessage = destination.id == R.id.messageFragment,
+                icSetting = destination.id == R.id.settingFragment,
+                icNotification = destination.id == R.id.searchFragment, outMainActivity =true)
             when (destination.id) {
                 R.id.editProfileFragment,
                 R.id.profileFragment,
@@ -265,7 +270,7 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
             homeViewModel.createPostStateCreatePost.collect {
                 it.data?.let {
                     binding.root snackbar ("Success Uploaded")
-                    navController.navigate(R.id.homeFragment)
+                   homeViewModel.getPosts()
                 }
                 if (it.isLoading) showMyProgress() else hideMyProgress()
                 it.error?.let {
