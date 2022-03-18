@@ -34,6 +34,7 @@
                 android:src="@drawable/ic_arrow_round_back"
                 />
             <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -42,7 +43,6 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/_12ssp"
                 android:layout_weight="1"
-                android:text="Search to find your doctor"
                 />
         </LinearLayout>
 

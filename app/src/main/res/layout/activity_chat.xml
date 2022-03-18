@@ -8,13 +8,34 @@
     tools:context=".presentation.activities.ChatActivity">
 
 
-    <io.getstream.chat.android.ui.channel.list.ChannelListView
-        android:id="@+id/channelListView"
+
+    <io.getstream.chat.android.ui.message.list.header.MessageListHeaderView
+        android:id="@+id/messageListHeaderView"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <io.getstream.chat.android.ui.message.list.MessageListView
+        android:id="@+id/messageListView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:streamUiMessageBackgroundColorMine="@color/colorPrimary"
+        app:streamUiMessageBackgroundColorTheirs="#FFFFFF"
+        app:streamUiMessageTextColorMine="#FFFFFF"
+        app:streamUiMessageTextColorTheirs="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/messageInputView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messageListHeaderView" />
+
+    <io.getstream.chat.android.ui.message.input.MessageInputView
+        android:id="@+id/messageInputView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

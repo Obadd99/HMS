@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_checkResultFragment"
+            app:destination="@id/checkResultFragment" />
     </fragment>
     <fragment
         android:id="@+id/messageFragment"
@@ -51,8 +54,14 @@
         android:id="@+id/chatFragment"
         android:name="com.developers.healtywise.presentation.main.chat.ChatFragment"
         android:label="ChatFragment" >
+
+
         <argument
-            android:name="user"
-            app:argType="com.developers.healtywise.domin.models.account.User" />
+            android:name="channelId"
+            app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/checkResultFragment"
+        android:name="com.developers.healtywise.presentation.main.checkResult.CheckResultFragment"
+        android:label="CheckResultFragment" />
 </navigation>

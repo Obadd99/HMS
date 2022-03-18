@@ -63,9 +63,7 @@ class HomeFragment : Fragment(), AddPostCommunicationHelper {
         lifecycleScope.launchWhenStarted {
             homeViewModel.getPostState.collect {
                 Log.i("GAMALRAGAB", "subscribeTOGetPostsDoctor: ${it.toString()}")
-                if (it.isLoading) uiCommunicationListener.isLoading(loading = true,
-                    mainActivity = true) else uiCommunicationListener.isLoading(loading = false,
-                    mainActivity = true)
+                uiCommunicationListener.isLoading(loading = it.isLoading)
 
                 it.data?.let {
                     postAdapter.posts = it

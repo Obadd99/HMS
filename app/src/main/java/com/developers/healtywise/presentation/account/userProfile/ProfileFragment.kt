@@ -21,6 +21,7 @@ import com.developers.healtywise.databinding.FragmentProfileBinding
 import com.developers.healtywise.presentation.activities.SetupActivity
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import io.getstream.chat.android.client.ChatClient
 import kotlinx.coroutines.async
 import javax.inject.Inject
 
@@ -41,6 +42,7 @@ class ProfileFragment : Fragment() {
     @Inject
     lateinit var glide: RequestManager
 
+    private val client=ChatClient.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -76,7 +78,7 @@ class ProfileFragment : Fragment() {
                 dataStoreManager.logOut()
             }.await()
             navigateToSetupActivity()
-
+            client.disconnect()
         }
     }
 

@@ -38,6 +38,8 @@
     <string name="update">Update</string>
     <string name="message">Message</string>
     <string name="upload_post">Upload Post</string>
+    <string name="search_to_find_your_doctor">Search to find your doctor</string>
+    <string name="search_to_find_your_patient">Search to find your patient</string>
     <array name="itemsJob">
         <item>@string/doctor</item>
         <item>@string/others</item>

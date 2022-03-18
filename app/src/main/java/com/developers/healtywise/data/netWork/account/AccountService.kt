@@ -24,6 +24,7 @@ import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.HashMap
 
 class AccountService @Inject constructor(
     private val auth: FirebaseAuth,
@@ -57,6 +58,21 @@ class AccountService @Inject constructor(
         }
         val user = User(uid, firstName, lastName, email, mobile, imageURL, birthdate, doctor, male)
         users.document(uid).set(user).await()
+        return user
+    }
+
+    suspend fun updateUserProfile(
+      user: User
+    ): User {
+
+        user.imageProfileUploaded?.let {
+            val imageUploadResult =
+                storage.getReference(user.email).putFile(Uri.parse(it)).await()
+           val imageURL =
+                imageUploadResult?.metadata?.reference?.downloadUrl?.await().toString()
+           user.imageProfile=imageURL
+        }
+        users.document(user.userId).set(user).await()
         return user
     }
 
@@ -96,13 +112,13 @@ class AccountService @Inject constructor(
         return post
     }
 
-    suspend fun searchDoctorUser(query: String, userDoctor: Boolean = false): List<User> {
+    suspend fun searchDoctorUser(query: String, userDoctor: Boolean ): List<User> {
         val userResult = if (query.isNotEmpty()) {
             users.whereLessThanOrEqualTo("firstName", query)
-                .whereEqualTo("doctor", userDoctor)
+                .whereEqualTo("doctor", !userDoctor)
                 .get().await().toObjects(User::class.java)
         } else {
-            users.whereEqualTo("doctor", true).get().await().toObjects(User::class.java)
+            users.whereEqualTo("doctor", !userDoctor).get().await().toObjects(User::class.java)
         }
 
         return userResult

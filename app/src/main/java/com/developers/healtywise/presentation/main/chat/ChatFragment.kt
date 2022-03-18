@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,14 +21,23 @@ import com.developers.healtywise.common.helpers.utils.decodeByte
 import com.developers.healtywise.common.helpers.utils.encodeKey
 import com.developers.healtywise.common.helpers.utils.snackbar
 import com.developers.healtywise.data.local.dataStore.DataStoreManager
+import com.developers.healtywise.databinding.ActivityChatBinding
 import com.developers.healtywise.databinding.FragmentChatBinding
 import com.developers.healtywise.domin.models.main.ChatMessage
 import com.developers.healtywise.presentation.main.chat.adapter.ChatAdapter
+import com.getstream.sdk.chat.viewmodel.MessageInputViewModel
+import com.getstream.sdk.chat.viewmodel.messages.MessageListViewModel
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.AndroidEntryPoint
+import io.getstream.chat.android.ui.message.input.MessageInputView
+import io.getstream.chat.android.ui.message.input.viewmodel.bindView
+import io.getstream.chat.android.ui.message.list.header.viewmodel.MessageListHeaderViewModel
+import io.getstream.chat.android.ui.message.list.header.viewmodel.bindView
+import io.getstream.chat.android.ui.message.list.viewmodel.bindView
+import io.getstream.chat.android.ui.message.list.viewmodel.factory.MessageListViewModelFactory
 import kotlinx.coroutines.flow.collect
 import java.lang.reflect.Array
 import java.text.SimpleDateFormat
@@ -38,152 +48,77 @@ import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class ChatFragment : Fragment() {
-    private var _binding: FragmentChatBinding? = null
+    private var _binding: ActivityChatBinding? = null
     private val binding get() = _binding!!
     private lateinit var uiCommunicationListener: UICommunicationHelper
 
     private val args: ChatFragmentArgs by navArgs()
     private val navController by lazy { findNavController() }
 
-    private val sendMessageViewModel: SendMessageViewModel by viewModels()
 
     @Inject
     lateinit var dataStoreManager: DataStoreManager
-
-    @Inject
-    lateinit var chatAdapter: ChatAdapter
-    private val chatsList: ArrayList<ChatMessage> by lazy {
-        ArrayList<ChatMessage>()
-    }
+    private lateinit var cid: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        cid = args.channelId
 
-        binding.chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
-        lifecycleScope.launchWhenStarted {
-            uiCommunicationListener.isLoading(true)
-            dataStoreManager.getUserProfile().collect {
-                chatAdapter.senderId = it.userId
-                // sendMessageViewModel.getMessage(args.user.imageProfile,it.userId,args.user.userId)
-                uiCommunicationListener.isLoading(false)
-                addMessageHotSnap(it.userId, args.user.userId)
-            }
-        }
+        // Step 1 - Create three separate ViewModels for the views so it's easy
+        //          to customize them individually
+        val factory = MessageListViewModelFactory(cid)
+        val messageListHeaderViewModel: MessageListHeaderViewModel by viewModels { factory }
+        val messageListViewModel: MessageListViewModel by viewModels { factory }
+        val messageInputViewModel: MessageInputViewModel by viewModels { factory }
+        // TODO set custom Imgur attachment factory
 
-        setListenerActions()
-        loadUserReceivedDetials()
-        setupRecyclerViewMessages()
-        subscribeToMessagesState()
-        subscribeToSendMessagesState()
-        binding.etMessage.doAfterTextChanged {
-            if (chatsList.size > 0) {
-                try {
-                    binding.chatRecyclerView.scrollToPosition(  chatAdapter.itemCount - 1)
-                }catch (e:Exception){
-                    Log.i(TAG, "Exception:${e.localizedMessage} ")
+        // Step 2 - Bind the view and ViewModels, they are loosely coupled so it's easy to customize
+        messageListHeaderViewModel.bindView(binding.messageListHeaderView, viewLifecycleOwner)
+        messageListViewModel.bindView(binding.messageListView, viewLifecycleOwner)
+        messageInputViewModel.bindView(binding.messageInputView, viewLifecycleOwner)
+
+        // Step 3 - Let both MessageListHeaderView and MessageInputView know when we open a thread
+        messageListViewModel.mode.observe(viewLifecycleOwner) { mode ->
+            when (mode) {
+                is MessageListViewModel.Mode.Thread -> {
+                    messageListHeaderViewModel.setActiveThread(mode.parentMessage)
+                    messageInputViewModel.setActiveThread(mode.parentMessage)
+                }
+                MessageListViewModel.Mode.Normal -> {
+                    messageListHeaderViewModel.resetThread()
+                    messageInputViewModel.resetThread()
                 }
             }
         }
-    }
 
-    private fun addMessageHotSnap(sendId: String, receiverId: String) {
-        val messages = FirebaseFirestore.getInstance().collection(Constants.MESSAGES)
-        messages.whereEqualTo("sendId", sendId)
-            .whereEqualTo("receiverId", receiverId)
-            .addSnapshotListener(messageListener)
-        messages.whereEqualTo("sendId", receiverId)
-            .whereEqualTo("receiverId", sendId)
-            .addSnapshotListener(messageListener)
-    }
+        // Step 4 - Let the message input know when we are editing a message
+        binding.messageListView.setMessageEditHandler(messageInputViewModel::postMessageToEdit)
 
-    private val messageListener: EventListener<QuerySnapshot> = EventListener { value, error ->
-        value?.let {
-            Log.i(TAG, "EventListener:${it.toString()} ")
-            // val messages = it.toObjects(ChatMessage::class.java)
-            it.documentChanges.forEach {
-                if (it.type == DocumentChange.Type.ADDED) {
-                    val message = it.document.toObject(ChatMessage::class.java)
-                    message.also {
-                        it.dateTimeMessage =
-                            SimpleDateFormat("EEE, d MMM yyyy hh:mm aaa",
-                                Locale.US).format(Date(it.date))
-                        it.userReceiverData = args.user
-                        it.message = decodeByte(it.message)
-                    }
-                    chatsList.add(message)
-                }
-            }
-            chatsList.sortBy { it.date }
-            chatAdapter.messages = chatsList
-            if (chatsList.size > 0) {
-                try {
-                    binding.chatRecyclerView.scrollToPosition(  chatAdapter.itemCount - 1)
-                }catch (e:Exception){
-                    Log.i(TAG, "Exception:${e.localizedMessage} ")
-                }
+        // Step 5 - Handle navigate up state
+        messageListViewModel.state.observe(viewLifecycleOwner) { state ->
+            if (state is MessageListViewModel.State.NavigateUp) {
+                navController.popBackStack()
             }
         }
-    }
 
-    private fun subscribeToSendMessagesState() {
-        lifecycleScope.launchWhenStarted {
-            sendMessageViewModel.sendMessagedState.collect {
-                Log.i(TAG, "subscribeToSendMessagesState: ${it.toString()}")
-            }
+        // Step 6 - Handle back button behaviour correctly when you're in a thread
+        val backHandler = {
+            messageListViewModel.onEvent(MessageListViewModel.Event.BackButtonPressed)
         }
-    }
-
-    private fun subscribeToMessagesState() {
-
-        lifecycleScope.launchWhenStarted {
-            sendMessageViewModel.getMessageState.collect {
-                Log.i(TAG, "subscribeToMessagesState: ${it}")
-                it.error?.let {
-                    snackbar(it)
-                }
-                it.data?.let {
-                    chatAdapter.messages = it
-                }
-            }
+        binding.messageListHeaderView.setBackButtonClickListener(backHandler)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            backHandler()
         }
+
     }
 
-    private fun loadUserReceivedDetials() {
-        "${args.user.firstName} ${args.user.lastName}".also { binding.textName.text = it }
-    }
-
-    private fun setupRecyclerViewMessages() = binding.chatRecyclerView.apply {
-        itemAnimator = null
-        isNestedScrollingEnabled = true
-        layoutManager = LinearLayoutManager(requireContext())
-        adapter = chatAdapter
-    }
-
-    private fun setListenerActions() {
-        binding.chatBackImaged.setOnClickListener {
-            navController.popBackStack()
-        }
-        binding.sendLayout.setOnClickListener {
-            val message = binding.etMessage.text.toString().trim()
-            if (message.isNotEmpty()) {
-                val messageEncoded = encodeKey(message)
-                sendMessage(messageEncoded, args.user.userId)
-            }
-        }
-    }
-
-    private fun sendMessage(messageEncoded: String, receiverId: String) {
-        Log.i(TAG, "sendMessage: ${messageEncoded}")
-        sendMessageViewModel.sendMessage(messageEncoded, receiverId)
-        binding.etMessage.setText("")
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        _binding = FragmentChatBinding.inflate(inflater, container, false)
+        _binding = ActivityChatBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -194,9 +129,6 @@ class ChatFragment : Fragment() {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

@@ -1,11 +1,12 @@
 package com.developers.healtywise.app
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.developers.healtywise.common.helpers.utils.Constants.API_KEY
 import dagger.hilt.android.HiltAndroidApp
 import io.getstream.chat.android.client.ChatClient
 import io.getstream.chat.android.client.logger.ChatLogLevel
-import io.getstream.chat.android.offline.ChatDomain
+import io.getstream.chat.android.livedata.ChatDomain
 
 @HiltAndroidApp
 class MyBaseApp:Application(){
@@ -18,7 +19,7 @@ class MyBaseApp:Application(){
             .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
             .build()
         ChatDomain.Builder(client, this).build()
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 //        FirebaseApp.initializeApp(applicationContext)
 //        FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC)
 //        FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)

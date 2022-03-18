@@ -11,16 +11,16 @@ import com.google.gson.annotations.Expose
 @IgnoreExtraProperties
 data class User(
      val userId: String="",
-     val firstName: String="",
-     val lastName: String="",
-     val email: String="",
-     val mobile: String="",
-     val imageProfile: String= HOLDER_ICON,
+     var firstName: String="",
+     var lastName: String="",
+     var email: String="",
+     var mobile: String="",
+     var imageProfile: String= HOLDER_ICON,
      val birthDate: String= "",
      val doctor: Boolean= false,
      val male: Boolean= false,
      @get:Exclude
-     val imageProfileUploaded: String?=null,
+     var imageProfileUploaded: String?=null,
 ):Parcelable {
      override fun describeContents(): Int {
           return 0

@@ -18,7 +18,7 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun createPost(text: String): Any = account.createPost(text)
 
 
-    override suspend fun getUsers(username: String,userDoctor:Boolean): List<User> = account.searchDoctorUser(username)
+    override suspend fun getUsers(username: String,userDoctor:Boolean): List<User> = account.searchDoctorUser(username,userDoctor)
 
     override suspend fun getUser(uid: String): User = account.getUser(uid)
 
@@ -34,4 +34,5 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getRecentConversations(userId: String): List<ChatMessage> =account.getRecentConversations(userId)
+    override suspend fun editProfile(user: User): User =account.updateUserProfile(user)
 }

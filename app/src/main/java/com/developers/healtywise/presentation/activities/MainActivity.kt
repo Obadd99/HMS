@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.ImageViewCompat
@@ -24,19 +25,27 @@ import com.developers.healtywise.common.helpers.utils.snackbar
 import com.developers.healtywise.common.helpers.utils.statusBar
 import com.developers.healtywise.data.local.dataStore.DataStoreManager
 import com.developers.healtywise.databinding.ActivityMainBinding
+import com.developers.healtywise.domin.models.account.User
 import com.developers.healtywise.presentation.main.home.HomeViewModel
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import io.getstream.chat.android.client.ChatClient
+import io.getstream.chat.android.client.models.Device
+import io.getstream.chat.android.client.models.PushProvider
+import io.getstream.chat.android.core.internal.InternalStreamChatApi
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunicationHelper {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    private val client = ChatClient.instance()
 
     @Inject
     lateinit var dataStoreManager: DataStoreManager
     private val homeViewModel: HomeViewModel by viewModels()
+    private var userinfo: User? = null
 
     @Inject
     lateinit var authInstance: FirebaseAuth
@@ -64,11 +73,10 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
     private fun setupVisibilityOfBottomNavigation() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             hideMyProgress()
-
             setupBottomNavClicked(icHome = destination.id == R.id.homeFragment,
                 icMessage = destination.id == R.id.messageFragment,
                 icSetting = destination.id == R.id.settingFragment,
-                icNotification = destination.id == R.id.searchFragment, outMainActivity =true)
+                icNotification = destination.id == R.id.searchFragment, outMainActivity = true)
             when (destination.id) {
                 R.id.editProfileFragment,
                 R.id.profileFragment,
@@ -85,6 +93,15 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        lifecycleScope.launchWhenStarted {
+            dataStoreManager.getUserProfile().collect {
+                userinfo = it
+                setupChatClient(it)
+            }
+        }
+    }
 
     private fun itemBottomNavigationClicked(navController: NavController) {
 
@@ -95,10 +112,9 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
             }
         }
         binding.icMessage.setOnClickListener {
-            if (!binding.icMessageView.isVisible) {
+            if (!binding.icMessageView.isVisible && client.getCurrentUser() != null) {
                 setupBottomNavClicked(icMessage = true)
             }
-
         }
 
         binding.icFloatingSend.setOnClickListener {
@@ -106,7 +122,7 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
         }
 
         binding.icSearch.setOnClickListener {
-            if (!binding.icNotificationView.isVisible) {
+            if (!binding.icNotificationView.isVisible && client.getCurrentUser() != null) {
                 setupBottomNavClicked(icNotification = true)
             }
         }
@@ -119,6 +135,34 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
 
     }
 
+    private fun setupChatClient(it: User) {
+        if (client.getCurrentUser() == null) {
+            Log.i(TAG, "setupChatClient: ")
+            val user = io.getstream.chat.android.client.models.User(id = it.userId).apply {
+                name = "${it.firstName} ${it.lastName}"
+                image = it.imageProfile
+                extraData = mutableMapOf(
+                    "doctor" to it.doctor,
+                    "image" to it.imageProfile,
+                    "name" to "${it.firstName} ${it.lastName}"
+                )
+            }
+            val token = client.devToken(it.userId)
+            client.connectUser(
+                user = user,
+                token = token
+            ).enqueue { result ->
+                if (result.isSuccess) {
+                    Log.i(TAG, "setupChatClient: setup channels")
+                } else {
+                    binding.root snackbar (result.error().message.toString())
+                }
+            }
+        }
+
+        Log.i(TAG, "setupChatClient: ${client.getCurrentUser()}")
+
+    }
 
     open fun setupBottomNavClicked(
         icHome: Boolean = false,
@@ -254,14 +298,12 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
     }
 
     override fun uploadPost() {
-        lifecycleScope.launchWhenStarted {
-            dataStoreManager.getUserProfile().collect {
-                if (it.doctor) {
-                    CustomDialog.showDialogForAddPost(this@MainActivity) {
-                        homeViewModel.createPost(it)
-                    }
-                } else {
+        userinfo?.let {
+            if (it.doctor) {
+                CustomDialog.showDialogForAddPost(this@MainActivity) {
+                    homeViewModel.createPost(it)
                 }
+            } else {
             }
         }
     }
@@ -271,7 +313,7 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
             homeViewModel.createPostStateCreatePost.collect {
                 it.data?.let {
                     binding.root snackbar ("Success Uploaded")
-                   homeViewModel.getPosts()
+                    homeViewModel.getPosts()
                 }
                 if (it.isLoading) showMyProgress() else hideMyProgress()
                 it.error?.let {
@@ -279,5 +321,12 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        try {
+            client.disconnectSocket()
+        }catch (e:Exception){}
     }
 }

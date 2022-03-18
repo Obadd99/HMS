@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:animateLayoutChanges="true"
-    android:background="@color/colorPrimary_light"
+    android:background="@color/white"
     android:layout_height="match_parent">
-
     <View
         android:id="@+id/viewBackground"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/headerBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,8 +38,35 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ic_add_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        app:cardBackgroundColor="@color/colorPrimaryDark"
+        app:cardCornerRadius="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@id/chatBackImaged"
+        android:padding="@dimen/_5sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_3sdp"
+            android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+    </androidx.cardview.widget.CardView>
+
+
     <TextView
-        android:id="@+id/textName"
+        android:id="@+id/tv_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_8sdp"
@@ -48,7 +75,6 @@
         android:minLines="1"
         android:ellipsize="end"
         android:gravity="center"
-        android:text="Your Doctor's"
         android:textSize="@dimen/_14ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/chatBackImaged"
@@ -63,20 +89,17 @@
         app:layout_constraintTop_toBottomOf="@id/chatBackImaged"
         android:id="@+id/viewSupport"
         />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chatRecyclerView"
-        android:layout_width="match_parent"
+
+
+    <io.getstream.chat.android.ui.channel.list.ChannelListView
+        android:id="@+id/channelListView"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/viewBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewSupport"
-        app:layout_constraintBottom_toBottomOf="@id/viewBackground"
-        android:clipToPadding="false"
-        android:overScrollMode="never"
-        android:padding="@dimen/_10sdp"
-        />
-
-
+        app:layout_constraintTop_toTopOf="@id/viewBackground"
+    />
 
 
 
