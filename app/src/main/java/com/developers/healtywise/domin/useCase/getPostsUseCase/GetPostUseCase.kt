@@ -23,10 +23,7 @@ class GetPostUseCase @Inject constructor(
     ): Flow<Resource<List<Post>>> = flow {
         emit(Resource.Loading())
         val result = safeCall {
-            val createData = mainRepository.getPosts().onEach {
-//                it.currentPostTime=formatter.format(date.setTime(it.date))
-                it.currentPostTime=formatter.format(Date(it.date))
-            }
+            val createData = mainRepository.getPosts()
             Resource.Success(createData)
         }
         emit(result)

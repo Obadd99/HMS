@@ -23,7 +23,8 @@ object Constants {
     const val USERS: String = "Users"
     const val POSTS: String = "Posts"
     const val MESSAGES: String = "Chats"
-
+    const val RECENT_CONVERSATION: String = "RecentConversation"
+    const val API_KEY="7hnvpxbuuvjb"
 
 
     const val BASE_URL = ""

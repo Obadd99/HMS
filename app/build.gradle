@@ -147,8 +147,11 @@ dependencies {
     // Firebase Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0-native-mt'
     implementation 'com.google.code.gson:gson:2.8.9'
-    implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.2'
     implementation 'com.google.firebase:firebase-analytics-ktx:20.1.0'
-    implementation 'com.google.firebase:firebase-firestore-ktx:24.0.1'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.0.2'
 
+    //stream
+    implementation "io.getstream:stream-chat-android-ui-components:4.28.2"
+    implementation "io.coil-kt:coil:1.4.0"
 }

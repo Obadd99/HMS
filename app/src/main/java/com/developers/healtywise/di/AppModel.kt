@@ -1,5 +1,6 @@
 package com.developers.healtywise.di
 
+import android.annotation.SuppressLint
 import android.content.Context
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -18,8 +19,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.*
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Singleton
 
 @Module
@@ -84,6 +88,18 @@ object AppModel {
     fun provideFirebaseAuth(): FirebaseAuth {
         return FirebaseAuth.getInstance()
     }
+
+
+    @SuppressLint("NewApi")
+    @Singleton
+    @Provides
+    fun provideSimpleDateFormat(): SimpleDateFormat = SimpleDateFormat("EEE, d MMM yyyy hh:mm aaa", Locale.US)
+
+
+    @Singleton
+    @Provides
+    fun provideDate(): Date = Date()
+
 
 
 

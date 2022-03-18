@@ -12,4 +12,5 @@ interface MainRepository {
     suspend fun getPosts():List<Post>
     suspend fun sendMessage(message:String, receiverId:String):Any
     suspend fun getMessage(senderId:String,receiverId: String):List<ChatMessage>
+    suspend fun getRecentConversations(userId: String):List<ChatMessage>
 }

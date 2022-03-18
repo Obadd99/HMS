@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -35,7 +36,7 @@ class HomeFragment : Fragment(), AddPostCommunicationHelper {
 
     private val navController by lazy { findNavController() }
 
-    private val homeViewModel: HomeViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by activityViewModels()
 
     @Inject
     lateinit var dataStoreManager: DataStoreManager
@@ -69,6 +70,8 @@ class HomeFragment : Fragment(), AddPostCommunicationHelper {
                 it.data?.let {
                     postAdapter.posts = it
                     binding.layoutEmptyView.emptyView.isVisible = it.isEmpty()
+                    if (it.isNotEmpty())
+                        binding.notesRecyclerView.scrollToPosition(0)
                 }
                 it.error?.let {
                     binding.layoutEmptyView.emptyView.isVisible = true

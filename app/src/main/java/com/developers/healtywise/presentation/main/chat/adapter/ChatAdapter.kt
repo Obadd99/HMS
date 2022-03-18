@@ -62,7 +62,9 @@ class ChatAdapter @Inject constructor(
         fun bindData(item: ChatMessage) {
             itemBinding.textMessage.text = item.message
             itemBinding.textDateTime.text = item.dateTimeMessage
-            glide.load(item.receiverProfilePictureUrl).into(itemBinding.userImage)
+            item.userReceiverData?.let {
+                glide.load(it.imageProfile).into(itemBinding.userImage)
+            }
         }
 
     }

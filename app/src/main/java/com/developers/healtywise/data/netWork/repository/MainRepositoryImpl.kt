@@ -32,4 +32,6 @@ class MainRepositoryImpl @Inject constructor(
         account.addMessageHotSnap(senderId,receiverId)
         return account.getMessage(emptyList())
     }
+
+    override suspend fun getRecentConversations(userId: String): List<ChatMessage> =account.getRecentConversations(userId)
 }

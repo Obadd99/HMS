@@ -2,12 +2,16 @@ package com.developers.healtywise.data.netWork.account
 
 import android.net.Uri
 import android.util.Log
+import com.developers.healtywise.common.helpers.utils.Constants
 import com.developers.healtywise.domin.models.account.User
 import com.developers.healtywise.common.helpers.utils.Constants.HOLDER_ICON
 import com.developers.healtywise.common.helpers.utils.Constants.MESSAGES
 import com.developers.healtywise.common.helpers.utils.Constants.POSTS
+import com.developers.healtywise.common.helpers.utils.Constants.RECENT_CONVERSATION
 import com.developers.healtywise.common.helpers.utils.Constants.TAG
 import com.developers.healtywise.common.helpers.utils.Constants.USERS
+import com.developers.healtywise.common.helpers.utils.decodeByte
+import com.developers.healtywise.common.helpers.utils.encodeKey
 import com.developers.healtywise.domin.models.main.ChatMessage
 import com.developers.healtywise.domin.models.main.Post
 import com.google.firebase.auth.FirebaseAuth
@@ -17,15 +21,18 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
 class AccountService @Inject constructor(
     private val auth: FirebaseAuth,
+    private val formatter: SimpleDateFormat
 ) {
     private val users = FirebaseFirestore.getInstance().collection(USERS)
     private val posts = FirebaseFirestore.getInstance().collection(POSTS)
     private val messages = FirebaseFirestore.getInstance().collection(MESSAGES)
+    private val recentChats = FirebaseFirestore.getInstance().collection(RECENT_CONVERSATION)
     private val storage = Firebase.storage
 
     suspend fun register(
@@ -89,7 +96,7 @@ class AccountService @Inject constructor(
         return post
     }
 
-    suspend fun searchDoctorUser(query: String,userDoctor:Boolean=false): List<User> {
+    suspend fun searchDoctorUser(query: String, userDoctor: Boolean = false): List<User> {
         val userResult = if (query.isNotEmpty()) {
             users.whereLessThanOrEqualTo("firstName", query)
                 .whereEqualTo("doctor", userDoctor)
@@ -118,8 +125,36 @@ class AccountService @Inject constructor(
                     val user = getUser(post.authorUid)
                     post.authorProfilePictureUrl = user.imageProfile
                     post.authorUsername = "${user.firstName} ${user.lastName}"
+                    post.currentPostTime=formatter.format(Date(post.date))
                 }
         return allposts
+    }
+
+     suspend fun getRecentConversations(userId: String):List<ChatMessage> {
+        val recentConventions =
+            recentChats
+                .get().await().toObjects(ChatMessage::class.java)
+                .filter {
+                 //   (it.sendId==userId) or (it.receiverId==userId)
+                    it.sendId==userId
+                }.onEach {
+                    if (userId==it.sendId) {
+                        it.userReceiverData = getUser(it.receiverId)
+                    }else{
+                        it.userReceiverData = getUser(it.sendId)
+                    }
+                    it.dateTimeMessage=formatter.format(Date(it.date))
+                    it.message= decodeByte(it.message)
+                }.sortedBy {
+                   it.date
+                }
+        return recentConventions
+    }
+
+
+    private suspend fun setRecentMessage(messageChat: ChatMessage):Any {
+        recentChats.document("${messageChat.sendId}${messageChat.receiverId}").set(messageChat).await()
+        return Any()
     }
 
     suspend fun sendMessage(message: String, receiverId: String): Any {
@@ -132,9 +167,10 @@ class AccountService @Inject constructor(
             receiverId = receiverId,
             message = message
         )
+
         messages.document(messageId).set(messageChat).await()
         Log.i(TAG, "sendMessage: ")
-        return Any()
+        return setRecentMessage(messageChat)
     }
 
     fun getMessage(messages: List<ChatMessage>): List<ChatMessage> = messages

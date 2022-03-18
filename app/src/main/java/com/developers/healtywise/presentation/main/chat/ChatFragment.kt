@@ -58,6 +58,7 @@ class ChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
         lifecycleScope.launchWhenStarted {
             uiCommunicationListener.isLoading(true)
@@ -75,7 +76,13 @@ class ChatFragment : Fragment() {
         subscribeToMessagesState()
         subscribeToSendMessagesState()
         binding.etMessage.doAfterTextChanged {
-            binding.chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
+            if (chatsList.size > 0) {
+                try {
+                    binding.chatRecyclerView.scrollToPosition(  chatAdapter.itemCount - 1)
+                }catch (e:Exception){
+                    Log.i(TAG, "Exception:${e.localizedMessage} ")
+                }
+            }
         }
     }
 
@@ -100,7 +107,7 @@ class ChatFragment : Fragment() {
                         it.dateTimeMessage =
                             SimpleDateFormat("EEE, d MMM yyyy hh:mm aaa",
                                 Locale.US).format(Date(it.date))
-                        it.receiverProfilePictureUrl = args.user.imageProfile
+                        it.userReceiverData = args.user
                         it.message = decodeByte(it.message)
                     }
                     chatsList.add(message)
@@ -108,7 +115,13 @@ class ChatFragment : Fragment() {
             }
             chatsList.sortBy { it.date }
             chatAdapter.messages = chatsList
-            binding.chatRecyclerView.scrollToPosition(chatAdapter.messages.size - 1)
+            if (chatsList.size > 0) {
+                try {
+                    binding.chatRecyclerView.scrollToPosition(  chatAdapter.itemCount - 1)
+                }catch (e:Exception){
+                    Log.i(TAG, "Exception:${e.localizedMessage} ")
+                }
+            }
         }
     }
 

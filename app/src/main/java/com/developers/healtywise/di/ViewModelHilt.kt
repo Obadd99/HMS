@@ -18,16 +18,6 @@ import java.util.*
 @InstallIn(ViewModelComponent::class)
 object ViewModelHilt {
 
-    @SuppressLint("NewApi")
-    @ViewModelScoped
-    @Provides
-    fun provideSimpleDateFormat(): SimpleDateFormat = SimpleDateFormat("EEE, d MMM yyyy hh:mm aaa", Locale.US)
-
-
-    @ViewModelScoped
-    @Provides
-    fun provideDate(): Date = Date()
-
 
 
 
