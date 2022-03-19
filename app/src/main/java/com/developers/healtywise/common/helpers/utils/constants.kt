@@ -17,6 +17,7 @@ object Constants {
     const val REQUEST_CODE_CAMERA_PERMISSIONS = 111
     const val REQUEST_CODE_LOCATION_PERMISSIONS: Int=555
     const val ACTION_LOGIN_FRAGMENT_AFTER_LOGOUT: String = "ACTION_LOGIN_FRAGMENT_AFTER_LOGOUT"
+    const val ACTION_NEW_MESSAGE_SENT: String = "ACTION_NEW_MESSAGE_SENT"
     const val HOLDER_ICON="https://cdn-icons-png.flaticon.com/512/149/149071.png"
 
     const val USERS_INFO_FILE: String = "USER_INFO"

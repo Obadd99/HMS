@@ -154,4 +154,6 @@ dependencies {
     //stream
     implementation "io.getstream:stream-chat-android-ui-components:4.28.2"
     implementation "io.coil-kt:coil:1.4.0"
+    implementation "io.getstream:stream-chat-android-pushprovider-firebase:4.28.2"
+
 }

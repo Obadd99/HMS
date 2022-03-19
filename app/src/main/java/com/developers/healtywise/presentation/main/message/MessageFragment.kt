@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
@@ -15,7 +17,9 @@ import com.developers.healtywise.R
 import com.developers.healtywise.common.helpers.UICommunicationHelper
 import com.developers.healtywise.common.helpers.utils.Constants.TAG
 import com.developers.healtywise.data.local.dataStore.DataStoreManager
+import com.developers.healtywise.databinding.ChannelListLoadingViewBinding
 import com.developers.healtywise.databinding.FragmentMessageBinding
+import com.developers.healtywise.databinding.LogoutDialogLayoutBinding
 import com.developers.healtywise.domin.models.account.User
 import dagger.hilt.android.AndroidEntryPoint
 import io.getstream.chat.android.client.ChatClient
@@ -45,7 +49,10 @@ class MessageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+// Inflate loading view
+        val loadingView: ChannelListLoadingViewBinding = ChannelListLoadingViewBinding.inflate(LayoutInflater.from(context))
+// Set loading view
+        binding.channelListView.setLoadingView(loadingView.root, FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT))
 
         lifecycleScope.launchWhenStarted {
             dataStoreManager.getUserProfile().collect {
@@ -77,6 +84,12 @@ class MessageFragment : Fragment() {
             navController.popBackStack()
         }
 
+        binding.channelListView.setChannelInfoClickListener { channel ->
+            // Handle channel info click
+        }
+        binding.channelListView.setUserClickListener { user ->
+            // Handle member click
+        }
 
     }
 

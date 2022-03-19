@@ -19,6 +19,7 @@ import com.developers.healtywise.common.helpers.UICommunicationHelper
 import com.developers.healtywise.common.helpers.utils.snackbar
 import com.developers.healtywise.data.local.dataStore.DataStoreManager
 import com.developers.healtywise.databinding.FragmentHomeBinding
+import com.developers.healtywise.domin.models.account.User
 import com.developers.healtywise.presentation.activities.MainActivity
 import com.developers.healtywise.presentation.main.home.adapter.PostsAdapter
 import com.developers.healtywise.presentation.main.search.adapter.DoctorAdapter
@@ -28,7 +29,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), AddPostCommunicationHelper {
+class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var uiCommunicationListener: UICommunicationHelper
@@ -44,12 +45,13 @@ class HomeFragment : Fragment(), AddPostCommunicationHelper {
     @Inject
     lateinit var postAdapter: PostsAdapter
 
+    private var userInfo: User?=null
     @Inject
     lateinit var glide: RequestManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewModel.getPosts()
+
         setWelcomeMessageForUser()
         loadUserInfo()
         setupFragmentActions()
@@ -85,6 +87,7 @@ class HomeFragment : Fragment(), AddPostCommunicationHelper {
             dataStoreManager.getUserProfile().collect {
                 glide.load(it.imageProfile).into(binding.icProfile)
                 binding.icAddImg.isVisible = it.doctor
+                userInfo=it
             }
         }
     }
@@ -158,8 +161,13 @@ class HomeFragment : Fragment(), AddPostCommunicationHelper {
         adapter = postAdapter
     }
 
-    override fun uploadPost() {
+
+    override fun onStart() {
+        super.onStart()
+        homeViewModel.getPosts()
 
     }
+
+
 
 }

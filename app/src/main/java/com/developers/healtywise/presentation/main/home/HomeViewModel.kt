@@ -48,11 +48,9 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getPosts() {
-        Log.i(TAG, "getPosts: ")
         getPostUseCase().onEach {
             when (it) {
                 is Resource.Success -> {
-                    Log.i(TAG, "getPosts: ")
                     _getPostState.send(HomeGetPostUiState(data = it.data!!))
                 }
                 is Resource.Error -> {

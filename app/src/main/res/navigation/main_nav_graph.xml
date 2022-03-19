@@ -54,8 +54,6 @@
         android:id="@+id/chatFragment"
         android:name="com.developers.healtywise.presentation.main.chat.ChatFragment"
         android:label="ChatFragment" >
-
-
         <argument
             android:name="channelId"
             app:argType="string" />

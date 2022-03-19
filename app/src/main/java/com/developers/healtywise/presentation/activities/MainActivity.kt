@@ -1,5 +1,6 @@
 package com.developers.healtywise.presentation.activities
 
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -11,6 +12,7 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.ImageViewCompat
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +22,7 @@ import com.developers.healtywise.R
 import com.developers.healtywise.common.helpers.AddPostCommunicationHelper
 import com.developers.healtywise.common.helpers.UICommunicationHelper
 import com.developers.healtywise.common.helpers.dialog.CustomDialog
+import com.developers.healtywise.common.helpers.utils.Constants.ACTION_NEW_MESSAGE_SENT
 import com.developers.healtywise.common.helpers.utils.Constants.TAG
 import com.developers.healtywise.common.helpers.utils.snackbar
 import com.developers.healtywise.common.helpers.utils.statusBar
@@ -67,12 +70,30 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
 
         subscriptToCreatePostState()
 
+        onNewIntent(intent)
+
+    }
+
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.let{
+            val channelId=it.getStringExtra("channelId")
+            val channelType=it.getStringExtra("channelType")
+
+            if(it.action==ACTION_NEW_MESSAGE_SENT){
+                channelId?.let {id->
+                    val bundle = bundleOf("channelId" to "$channelType:$channelId")
+                    navController.navigate(R.id.chatFragment, bundle)
+                }
+            }
+        }
     }
 
 
     private fun setupVisibilityOfBottomNavigation() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            hideMyProgress()
+          //  hideMyProgress()
             setupBottomNavClicked(icHome = destination.id == R.id.homeFragment,
                 icMessage = destination.id == R.id.messageFragment,
                 icSetting = destination.id == R.id.settingFragment,
@@ -326,7 +347,7 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
     override fun onDestroy() {
         super.onDestroy()
         try {
-            client.disconnectSocket()
+//            client.disconnectSocket()
         }catch (e:Exception){}
     }
 }

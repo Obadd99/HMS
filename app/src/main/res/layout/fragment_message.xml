@@ -76,7 +76,7 @@
         android:ellipsize="end"
         android:gravity="center"
         android:textSize="@dimen/_14ssp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ic_add_img"
         app:layout_constraintStart_toEndOf="@id/chatBackImaged"
         app:layout_constraintTop_toTopOf="@id/chatBackImaged"
         app:layout_constraintBottom_toBottomOf="@id/chatBackImaged"
