@@ -39,6 +39,7 @@ class MyBaseApp:Application(){
                 intent
             }
         )
+        val handleNotification=MyNotificationHandler(this)
         // Step 1 - Set up the client for API calls and the domain for offline storage
         val client = ChatClient.Builder(API_KEY, this)
             .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
