@@ -1,35 +1,42 @@
 package com.developers.healtywise.presentation.main.checkResult
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.RequestManager
 import com.developers.healtywise.R
+import com.developers.healtywise.common.helpers.utils.Constants
+import com.developers.healtywise.common.helpers.utils.navigateSafely
+import com.developers.healtywise.common.helpers.utils.snackbar
 import com.developers.healtywise.data.local.dataStore.DataStoreManager
 import com.developers.healtywise.databinding.FragmentCheckResultBinding
-import com.developers.healtywise.databinding.FragmentSettingBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import com.developers.healtywise.domin.models.account.User
+import com.developers.healtywise.domin.models.main.CheckResult
 import com.developers.healtywise.presentation.main.checkResult.adapter.ImageSliderAdapter
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class CheckResultFragment:Fragment() {
     private var _binding: FragmentCheckResultBinding? = null
     private val binding get() = _binding!!
-    lateinit var userInfo:User
+    private lateinit var userInfo:User
+    private val navController by lazy { findNavController() }
     @Inject lateinit var dataStoreManager: DataStoreManager
-
-    @Inject
-    lateinit var imageSliderAdapter : ImageSliderAdapter
+    @Inject lateinit var glide:RequestManager
+    @Inject lateinit var imageSliderAdapter : ImageSliderAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadingUserInfo()
@@ -42,6 +49,58 @@ class CheckResultFragment:Fragment() {
                 getString(R.string.imageInfo5),
             )
         )
+
+        setupFragmentActions()
+    }
+
+    private fun setupFragmentActions() {
+        binding.floatingActionButtonCheckResult.setOnClickListener {
+            val spo2=binding.etSpo2.text.toString()
+            val temp=binding.etTemp.text.toString()
+            val bpm=binding.etBpm.text.toString()
+            if (validInputs(spo2,temp,bpm)){
+                val userInputs=CheckResult(spo2.toFloat(),temp.toFloat(),bpm.toFloat())
+                startCheckResult(userInputs)
+            }
+        }
+
+        binding.backIcon.setOnClickListener { navController.popBackStack() }
+    }
+
+    private fun validInputs(spo2: String, temp: String, bpm: String): Boolean {
+
+       return if (spo2.isEmpty()){
+            snackbar("Spo2 must be not empty")
+            binding.etSpo2.requestFocus()
+           false
+        }else  if (temp.isEmpty()){
+            snackbar("Temperature must be not empty")
+            binding.etTemp.requestFocus()
+           false
+        }else  if (bpm.isEmpty()){
+            snackbar(" heart rate must be not empty")
+            binding.etBpm.requestFocus()
+           false
+        }else{
+            true
+        }
+
+    }
+
+    private fun startCheckResult(userResult: CheckResult){
+        lifecycleScope.launchWhenStarted {
+
+            Log.i(Constants.TAG, "onViewCreated: spo2: ${userResult.calcDiagnosisForSpo2()}")
+            Log.i(Constants.TAG, "onViewCreated: temp:  ${userResult.calcDiagnosisForTem()}")
+            Log.i(Constants.TAG, "onViewCreated: bpm: ${userResult.calcDiagnosisForBPM()}")
+            Log.i(Constants.TAG, "onViewCreated: covid: ${userResult.calcDiagnosisForCovid19()}")
+            binding.checkResultSuccessLayout.isVisible = true
+            binding.layoutContainerCheckResult.isVisible = false
+            delay(3500)
+
+            val data= bundleOf("userResult" to userResult)
+            navController.navigateSafely(R.id.action_checkResultFragment_to_showUserResultFragment,data)
+        }
     }
 
     private fun loadingImageSlider(pictures : List<String>) {
@@ -106,13 +165,16 @@ class CheckResultFragment:Fragment() {
         lifecycleScope.launchWhenStarted {
             dataStoreManager.getUserProfile().collect{
                 userInfo=it
-                bindUserInfo()
+                    bindUserInfo(userInfo)
+
             }
         }
     }
 
-    private fun bindUserInfo() {
+    private fun bindUserInfo(userInfo: User) {
 
+        binding.helloUserNameTv.text=getString(R.string.hello_user_name,"${userInfo.firstName} ${userInfo.lastName}")
+        glide.load(userInfo.imageProfile).into(binding.icProfile)
     }
 
     override fun onCreateView(

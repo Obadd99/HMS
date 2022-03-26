@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/drawable/ic_right_arrow.xml" value="0.167" />
+        <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/layout/fragment_check_result.xml" value="0.25" />
+        <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/layout/fragment_show_user_result.xml" value="0.25" />
+        <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/layout/item_container_slider_image.xml" value="0.20607097050021378" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable-anydpi/ic_checked_box.xml" value="0.2305" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable-v24/ic_arrow_round_back.xml" value="0.2305" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/background_chat_input.xml" value="0.162" />

@@ -63,5 +63,17 @@
         android:id="@+id/checkResultFragment"
         tools:layout="@layout/fragment_check_result"
         android:name="com.developers.healtywise.presentation.main.checkResult.CheckResultFragment"
-        android:label="CheckResultFragment" />
+        android:label="CheckResultFragment" >
+        <action
+            android:id="@+id/action_checkResultFragment_to_showUserResultFragment"
+            app:destination="@id/showUserResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showUserResultFragment"
+        android:name="com.developers.healtywise.presentation.main.checkResult.ShowUserResultFragment"
+        android:label="ShowUserResultFragment" >
+        <argument
+            android:name="userResult"
+            app:argType="com.developers.healtywise.domin.models.main.CheckResult" />
+    </fragment>
 </navigation>

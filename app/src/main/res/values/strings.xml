@@ -14,7 +14,7 @@
     <string name="others">Others..</string>
     <string name="type_your_massage_here">type your massage here…</string>
     <string name="mobile_username_email">Mobile , username , email</string>
-    <string name="by_tapping_sign_up_accept_you_acknowledge_that_you_have_read_the_privacy_policy_and_agree_to_the_terms_of_service">By tapping “ Sign Up &amp; Accept ’ ,You \nacknowledge that you have read <font color='#303F9F'><b>the Privacy  \nPolicy</b></font> and agree to <font color='#303F9F'><b>the Terms of Service</b></font>.</string>
+    <string name="by_tapping_sign_up_accept_you_acknowledge_that_you_have_read_the_privacy_policy_and_agree_to_the_terms_of_service">By tapping “ Sign Up &amp; Accept ’ ,You \nacknowledge that you have read <font color='#303F9F'><b>the Privacy\nPolicy</b></font> and agree to <font color='#303F9F'><b>the Terms of Service</b></font>.</string>
     <string name="next">Next</string>
     <string name="Female">Female</string>
     <string name="Male">Male</string>
@@ -43,8 +43,8 @@
     <string name="hello_user_name">Hello %1$s</string>
     <string name="please_enter_all_records">Please enter all records</string>
     <string name="SPO2">Spo2</string>
-    <string name="Temp">Temp</string>
-    <string name="Bpm">Bpm</string>
+    <string name="Temp">Temperature</string>
+    <string name="Bpm">heart rate</string>
     <string name="imageInfo1">https://images.onhealth.com/images/slideshow/what-are-normal-safe-low-dangerous-blood-oxygen-levels-symptoms-chart/what-are-normal-safe-low-dangerous-blood-oxygen-levels-symptoms-chart-s1-why-your-blood-oxygen-saturation-matters.jpg</string>
     <string name="imageInfo2">https://health.clevelandclinic.org/wp-content/uploads/sites/3/2020/03/bodyTempNormal-marty-033020-770x533-1.jpg</string>
     <string name="imageInfo3">https://images.onhealth.com/images/slideshow/whats-a-healthy-and-normal-heart-rate-for-my-age/whats-a-healthy-and-normal-heart-rate-for-my-age-s3-healthy-resting-heart-rate-for-an-adult.jpg</string>
@@ -55,4 +55,15 @@
         <item>@string/doctor</item>
         <item>@string/others</item>
     </array>
+
+    <string name="normal_spo2">95:100</string>
+    <string name="spo1_advice">: To maintain Spo2 level in your body is through breathing ,the lungs takes oxygen that has been inhaled and binds it to hemoglobin that then travels throughout the body.</string>
+
+    <string name="normal_temp">36.1: 37.2 °c</string>
+    <string name="temp_advice">If your temperature is too high or too low you should seek medical assistance.</string>
+
+    <string name="normal_bpm">50 BPM (beat per minute) </string>
+    <string name="bpm_advice">To maintain your heart rate as normal\no If you smoke, stop.\no Limit your intake of alcohol.\no Limit or stop using caffeine. Some people are sensitive to caffeine and may notice more symptoms when using caffeinated products, such as tea, coffee, colas and some over-the- counter medications.\no Limit or stop using caffeine. Some people are sensitive to caffeine and may notice more symptoms when using caffeinated products,such as tea, coffee, colas and some over-the- counter medications.</string>
+<string name="covid19_advice">You should see doctor as fast as possible.
+</string>
 </resources>

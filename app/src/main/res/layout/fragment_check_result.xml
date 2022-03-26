@@ -46,7 +46,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginVertical="@dimen/_15ssp"
-        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_5sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         >
@@ -57,9 +57,24 @@
             android:layout_gravity="center"
             android:padding="@dimen/_10sdp"
             android:src="@drawable/ic_arrow_round_back"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/check_result_title"
+            app:layout_constraintBottom_toBottomOf="@id/check_result_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/check_result_title" />
+
+        <TextView
+            android:id="@+id/check_result_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/back_icon"
+            android:text="Check Result"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="@dimen/_20ssp"
+            android:textAlignment="center"
+            android:textColor="@color/color_des"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ic_profile"
@@ -69,7 +84,7 @@
             android:background="@drawable/holder"
             app:civ_border_color="@color/colorPrimary"
             app:civ_border_width="@dimen/_1sdp"
-            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_15sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/back_icon"
             app:riv_corner_radius="@dimen/_10sdp" />
@@ -78,13 +93,14 @@
             android:id="@+id/hello_user_name_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintTop_toBottomOf="@+id/back_icon"
+            app:layout_constraintTop_toTopOf="@id/ic_profile"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             app:layout_constraintStart_toEndOf="@id/ic_profile"
             android:text="@string/hello_user_name"
-            android:textSize="@dimen/_20ssp"
+            app:layout_constraintBottom_toBottomOf="@id/ic_profile"
+            android:textSize="@dimen/_15ssp"
+            android:gravity="center_vertical"
             android:singleLine="true"
             android:textColor="@color/colorPrimary"
             android:fontFamily="@font/poppins_bold"
@@ -95,12 +111,15 @@
             android:layout_height="@dimen/_160sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/enter_all_records_tv"
             android:visibility="visible"
             app:layout_constraintTop_toBottomOf="@id/hello_user_name_tv" />
         <View
             android:id="@+id/viewFadingEdge"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
+            android:layout_height="@dimen/_20sdp"
             android:background="@drawable/background_fading_edge"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@id/sliderViewPager" />
@@ -128,7 +147,7 @@
             android:textSize="@dimen/_18ssp"
             android:textAlignment="center"
             android:singleLine="true"
-            android:textColor="@color/colorPrimary_light"
+            android:textColor="@color/la_palma"
             android:fontFamily="@font/roboto_bold"
             />
 
@@ -152,7 +171,7 @@
                 android:background="@null"
                 android:textColor="@color/colorPrimary"
                 android:includeFontPadding="false"
-                android:inputType="textEmailAddress"
+                android:inputType="number"
                 android:padding="@dimen/_12ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -176,7 +195,7 @@
                 android:background="@null"
                 android:textColor="@color/colorPrimary"
                 android:includeFontPadding="false"
-                android:inputType="textEmailAddress"
+                android:inputType="number"
                 android:padding="@dimen/_12ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -200,9 +219,28 @@
                 android:background="@null"
                 android:textColor="@color/colorPrimary"
                 android:includeFontPadding="false"
-                android:inputType="textEmailAddress"
+                android:inputType="number"
                 android:padding="@dimen/_12ssp" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+            android:id="@+id/floatingActionButton_check_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/layoutBpm"
+            app:srcCompat="@drawable/ic_right_arrow"
+            android:src="@drawable/ic_right_arrow"
+            app:layout_constraintTop_toBottomOf="@id/layoutBpm"
+            app:layout_constraintVertical_bias="1"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            app:tint="@color/white"
+            app:fabSize="auto"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

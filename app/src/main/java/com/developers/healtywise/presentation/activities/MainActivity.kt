@@ -104,6 +104,8 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
                 R.id.profileFragment,
                 R.id.chatFragment,
                 R.id.messageFragment,
+                R.id.checkResultFragment,
+                R.id.showUserResultFragment,
                 -> {
                     hideBottomNavigation()
                 }
