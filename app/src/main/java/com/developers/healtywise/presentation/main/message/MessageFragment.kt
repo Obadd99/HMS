@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
@@ -16,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.developers.healtywise.R
 import com.developers.healtywise.common.helpers.UICommunicationHelper
 import com.developers.healtywise.common.helpers.utils.Constants.TAG
+import com.developers.healtywise.common.helpers.utils.navigateSafely
 import com.developers.healtywise.data.local.dataStore.DataStoreManager
 import com.developers.healtywise.databinding.ChannelListLoadingViewBinding
 import com.developers.healtywise.databinding.FragmentMessageBinding
@@ -73,9 +75,9 @@ class MessageFragment : Fragment() {
 
     private fun setupFragmentActions() {
         binding.channelListView.setChannelItemClickListener { channel ->
-            val action =
-                MessageFragmentDirections.actionMessageFragmentToChatFragment(channelId = channel.cid)
-            navController.navigate(action)
+            val data= bundleOf("channelId" to channel.cid)
+
+            navController.navigateSafely(R.id.action_messageFragment_to_chatFragment,data)
         }
         binding.icAddImg.setOnClickListener {
             navController.navigate(R.id.searchFragment)

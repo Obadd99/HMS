@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import com.developers.healtywise.R
 import com.developers.healtywise.common.helpers.UICommunicationHelper
 import com.developers.healtywise.common.helpers.utils.Constants.SEARCH_TIME_DELAY
 import com.developers.healtywise.common.helpers.utils.Constants.TAG
+import com.developers.healtywise.common.helpers.utils.navigateSafely
 import com.developers.healtywise.common.helpers.utils.snackbar
 import com.developers.healtywise.data.local.dataStore.DataStoreManager
 import com.developers.healtywise.databinding.FragmentSearchDoctorBinding
@@ -78,9 +80,9 @@ class SearchFragment : Fragment() {
             members = listOf(client.getCurrentUser()!!.id, userSelected.userId)
         ).enqueue {
             if (it.isSuccess) {
-                val action =
-                    SearchFragmentDirections.actionSearchFragmentToChatFragment(it.data().cid)
-                navController.navigate(action)
+                val data= bundleOf("channelId" to it.data().cid)
+
+                navController.navigateSafely(R.id.action_searchFragment_to_chatFragment,data)
             } else {
                 snackbar("this user not have channel")
             }

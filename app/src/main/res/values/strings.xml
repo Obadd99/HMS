@@ -40,6 +40,17 @@
     <string name="upload_post">Upload Post</string>
     <string name="search_to_find_your_doctor">Search to find your doctor</string>
     <string name="search_to_find_your_patient">Search to find your patient</string>
+    <string name="hello_user_name">Hello %1$s</string>
+    <string name="please_enter_all_records">Please enter all records</string>
+    <string name="SPO2">Spo2</string>
+    <string name="Temp">Temp</string>
+    <string name="Bpm">Bpm</string>
+    <string name="imageInfo1">https://images.onhealth.com/images/slideshow/what-are-normal-safe-low-dangerous-blood-oxygen-levels-symptoms-chart/what-are-normal-safe-low-dangerous-blood-oxygen-levels-symptoms-chart-s1-why-your-blood-oxygen-saturation-matters.jpg</string>
+    <string name="imageInfo2">https://health.clevelandclinic.org/wp-content/uploads/sites/3/2020/03/bodyTempNormal-marty-033020-770x533-1.jpg</string>
+    <string name="imageInfo3">https://images.onhealth.com/images/slideshow/whats-a-healthy-and-normal-heart-rate-for-my-age/whats-a-healthy-and-normal-heart-rate-for-my-age-s3-healthy-resting-heart-rate-for-an-adult.jpg</string>
+    <string name="imageInfo4">https://images.onhealth.com/images/slideshow/whats-a-healthy-and-normal-heart-rate-for-my-age/whats-a-healthy-and-normal-heart-rate-for-my-age-s4-healthy-resting-heart-rate-for-a-child.jpg</string>
+    <string name="imageInfo5">https://images.medicinenet.com/images/slideshow/xl-sq-promos/what-are-normal-safe-low-dangerous-blood-oxygen-levels-symptoms-chart.jpg</string>
+    <string name="imageInfo6">https://article.images.consumerreports.org/f_auto/prod/content/dam/CRO%20Images%202019/Health/10October/CR-Health-Inlinehero-healthiest-medical-tests-1019</string>
     <array name="itemsJob">
         <item>@string/doctor</item>
         <item>@string/others</item>

@@ -8,10 +8,13 @@
         <entry key="..\:/Healtywise/app/src/main/res/drawable/background_chat_input.xml" value="0.162" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/background_content_top.xml" value="0.162" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/background_content_top_recent.xml" value="0.162" />
+        <entry key="..\:/Healtywise/app/src/main/res/drawable/background_fading_edge.xml" value="0.1655" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/background_popup_spinner.xml" value="0.2305" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/background_recived_message.xml" value="0.162" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/background_select_items_home.xml" value="0.162" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/background_send_message.xml" value="0.162" />
+        <entry key="..\:/Healtywise/app/src/main/res/drawable/background_slider_indicator_active.xml" value="0.1655" />
+        <entry key="..\:/Healtywise/app/src/main/res/drawable/background_slider_indicator_inactive.xml" value="0.1655" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/background_spinner.xml" value="0.2305" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/background_upload_id_white.xml" value="0.162" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable/checkbox_background.xml" value="0.2305" />
@@ -37,7 +40,7 @@
         <entry key="..\:/Healtywise/app/src/main/res/layout/edit_profile.xml" value="0.20607097050021378" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/fagment_splash.xml" value="0.25104166666666666" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/fragment_chat.xml" value="0.20607097050021378" />
-        <entry key="..\:/Healtywise/app/src/main/res/layout/fragment_check_result.xml" value="0.67" />
+        <entry key="..\:/Healtywise/app/src/main/res/layout/fragment_check_result.xml" value="0.25" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/fragment_edit_profile.xml" value="0.20607097050021378" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/fragment_login.xml" value="0.25" />
@@ -50,6 +53,7 @@
         <entry key="..\:/Healtywise/app/src/main/res/layout/fragment_sign_up_password.xml" value="0.33" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/fragment_splash.xml" value="0.25" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/item_add_post_layout.xml" value="0.25" />
+        <entry key="..\:/Healtywise/app/src/main/res/layout/item_container_slider_image.xml" value="0.20607097050021378" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/item_content_recived_message.xml" value="0.20607097050021378" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/item_content_send_message.xml" value="0.20607097050021378" />
         <entry key="..\:/Healtywise/app/src/main/res/layout/item_loading_view.xml" value="0.20607097050021378" />

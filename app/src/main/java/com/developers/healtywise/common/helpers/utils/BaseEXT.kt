@@ -7,8 +7,13 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.net.Uri
+import android.os.Bundle
+import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigator
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -36,7 +41,17 @@ fun Activity.statusBar(color: Int) {
     window.statusBarColor = ContextCompat.getColor(this, color)
 }
 
-
+fun NavController.navigateSafely(
+    @IdRes resId: Int,
+    args: Bundle? = null,
+    navOptions: NavOptions? = null,
+    navExtras: Navigator.Extras? = null,
+) {
+    val action = currentDestination?.getAction(resId) ?: graph.getAction(resId)
+    if (action != null && currentDestination?.id != action.destinationId) {
+        navigate(resId, args, navOptions, navExtras)
+    }
+}
 
 fun setupTheme(isDarkMode: Boolean) {
     if (isDarkMode) {

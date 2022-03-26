@@ -24,6 +24,7 @@ import com.developers.healtywise.common.helpers.UICommunicationHelper
 import com.developers.healtywise.common.helpers.dialog.CustomDialog
 import com.developers.healtywise.common.helpers.utils.Constants.ACTION_NEW_MESSAGE_SENT
 import com.developers.healtywise.common.helpers.utils.Constants.TAG
+import com.developers.healtywise.common.helpers.utils.navigateSafely
 import com.developers.healtywise.common.helpers.utils.snackbar
 import com.developers.healtywise.common.helpers.utils.statusBar
 import com.developers.healtywise.data.local.dataStore.DataStoreManager
@@ -319,12 +320,15 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
     }
 
     override fun uploadPost() {
+        Log.i(TAG, "uploadPost: ")
         userinfo?.let {
             if (it.doctor) {
                 CustomDialog.showDialogForAddPost(this@MainActivity) {
                     homeViewModel.createPost(it)
                 }
             } else {
+                Log.i(TAG, "uploadPost: navigate")
+                navController.navigate(R.id.checkResultFragment)
             }
         }
     }

@@ -61,6 +61,11 @@ class HomeFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        homeViewModel.getPosts()
+        Log.i("GAMALRAGAB", "onResume: ")
+    }
     private fun subscribeTOGetPostsDoctor() {
         lifecycleScope.launchWhenStarted {
             homeViewModel.getPostState.collect {
@@ -162,11 +167,7 @@ class HomeFragment : Fragment() {
     }
 
 
-    override fun onStart() {
-        super.onStart()
-        homeViewModel.getPosts()
 
-    }
 
 
 
