@@ -55,6 +55,7 @@ class LoginFragment:Fragment() {
         }
     }
 
+
     private fun inputsValid(email: String, password: String): Boolean {
         return if (email.isEmpty()) {
             binding.etEmailLogin.requestFocus()
@@ -62,6 +63,8 @@ class LoginFragment:Fragment() {
             snackbar("Email is require")
             false
         } else if (password.isEmpty()) {
+
+
             binding.etPassLogin.requestFocus()
             binding.etPassLogin.error = "Password is require"
             snackbar("Password is require")
