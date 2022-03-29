@@ -7,6 +7,7 @@ import com.developers.healtywise.data.netWork.account.AccountService
 import com.developers.healtywise.domin.models.account.User
 import com.developers.healtywise.domin.models.main.ChatMessage
 import com.developers.healtywise.domin.models.main.Post
+import com.developers.healtywise.domin.models.main.Result
 import com.developers.healtywise.domin.repository.MainRepository
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
@@ -35,4 +36,6 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getRecentConversations(userId: String): List<ChatMessage> =account.getRecentConversations(userId)
     override suspend fun editProfile(user: User): User =account.updateUserProfile(user)
+    override suspend fun saveRecentResult(userId: String, result: Result): Any =account.saveRecentResult(userId, result)
+
 }

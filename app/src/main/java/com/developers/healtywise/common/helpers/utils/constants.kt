@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 
 
 object Constants {
+    const val NAVIGATE_TO_WEB: String="Go to web site"
     const val TAG = "GAMALRAGAB"
 
     const val REQUEST_CODE_READ_EXTERNAL_STORAGE_PERMISSIONS: Int = 123
@@ -25,6 +26,7 @@ object Constants {
     const val POSTS: String = "Posts"
     const val MESSAGES: String = "Chats"
     const val RECENT_CONVERSATION: String = "RecentConversation"
+    const val RESULTS: String = "Results"
     const val API_KEY="7hnvpxbuuvjb"
 
 

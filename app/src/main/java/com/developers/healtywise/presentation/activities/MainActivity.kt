@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +24,7 @@ import com.developers.healtywise.common.helpers.AddPostCommunicationHelper
 import com.developers.healtywise.common.helpers.UICommunicationHelper
 import com.developers.healtywise.common.helpers.dialog.CustomDialog
 import com.developers.healtywise.common.helpers.utils.Constants.ACTION_NEW_MESSAGE_SENT
+import com.developers.healtywise.common.helpers.utils.Constants.NAVIGATE_TO_WEB
 import com.developers.healtywise.common.helpers.utils.Constants.TAG
 import com.developers.healtywise.common.helpers.utils.navigateSafely
 import com.developers.healtywise.common.helpers.utils.snackbar
@@ -87,6 +89,12 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
                     val bundle = bundleOf("channelId" to "$channelType:$channelId")
                     navController.navigate(R.id.chatFragment, bundle)
                 }
+            }else if(it.action==NAVIGATE_TO_WEB){
+
+                val  browserIntent =  Intent(Intent.ACTION_VIEW, Uri.parse("https://health-wise.netlify.app"));
+                startActivity(browserIntent);
+            }else{
+
             }
         }
     }

@@ -43,6 +43,7 @@
     <string name="hello_user_name">Hello %1$s</string>
     <string name="please_enter_all_records">Please enter all records</string>
     <string name="SPO2">Spo2</string>
+    <string name="swnd_email_address">After click on Verify button, we will send verification link to your email.</string>
     <string name="Temp">Temperature</string>
     <string name="Bpm">heart rate</string>
     <string name="imageInfo1">https://images.onhealth.com/images/slideshow/what-are-normal-safe-low-dangerous-blood-oxygen-levels-symptoms-chart/what-are-normal-safe-low-dangerous-blood-oxygen-levels-symptoms-chart-s1-why-your-blood-oxygen-saturation-matters.jpg</string>
@@ -62,8 +63,15 @@
     <string name="normal_temp">36.1: 37.2 °c</string>
     <string name="temp_advice">If your temperature is too high or too low you should seek medical assistance.</string>
 
-    <string name="normal_bpm">50 BPM (beat per minute) </string>
+    <string name="normal_bpm">50 BPM/S</string>
     <string name="bpm_advice">To maintain your heart rate as normal\no If you smoke, stop.\no Limit your intake of alcohol.\no Limit or stop using caffeine. Some people are sensitive to caffeine and may notice more symptoms when using caffeinated products, such as tea, coffee, colas and some over-the- counter medications.\no Limit or stop using caffeine. Some people are sensitive to caffeine and may notice more symptoms when using caffeinated products,such as tea, coffee, colas and some over-the- counter medications.</string>
 <string name="covid19_advice">You should see doctor as fast as possible.
 </string>
+    <string name="note">Note</string>
+    <string name="confirm_borwser_doctor">Browse Doctor</string>
+    <string name="are_you_sure_to_change_password">change password!</string>
+    <string name="your_password">Current password</string>
+    <string name="change_password">Change Password</string>
+    <string name="your_email">Your mail</string>
+    <string name="new_password">New password</string>
 </resources>

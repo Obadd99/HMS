@@ -68,6 +68,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/back_icon"
             android:text="Check Result"
+            android:gravity="center"
+            android:includeFontPadding="false"
             android:fontFamily="@font/poppins_semibold"
             android:textSize="@dimen/_20ssp"
             android:textAlignment="center"

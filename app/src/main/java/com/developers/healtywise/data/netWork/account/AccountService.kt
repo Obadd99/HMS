@@ -8,12 +8,14 @@ import com.developers.healtywise.common.helpers.utils.Constants.HOLDER_ICON
 import com.developers.healtywise.common.helpers.utils.Constants.MESSAGES
 import com.developers.healtywise.common.helpers.utils.Constants.POSTS
 import com.developers.healtywise.common.helpers.utils.Constants.RECENT_CONVERSATION
+import com.developers.healtywise.common.helpers.utils.Constants.RESULTS
 import com.developers.healtywise.common.helpers.utils.Constants.TAG
 import com.developers.healtywise.common.helpers.utils.Constants.USERS
 import com.developers.healtywise.common.helpers.utils.decodeByte
 import com.developers.healtywise.common.helpers.utils.encodeKey
 import com.developers.healtywise.domin.models.main.ChatMessage
 import com.developers.healtywise.domin.models.main.Post
+import com.developers.healtywise.domin.models.main.Result
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
@@ -34,6 +36,7 @@ class AccountService @Inject constructor(
     private val posts = FirebaseFirestore.getInstance().collection(POSTS)
     private val messages = FirebaseFirestore.getInstance().collection(MESSAGES)
     private val recentChats = FirebaseFirestore.getInstance().collection(RECENT_CONVERSATION)
+    private val results = FirebaseFirestore.getInstance().collection(RESULTS)
     private val storage = Firebase.storage
 
     suspend fun register(
@@ -203,6 +206,10 @@ class AccountService @Inject constructor(
             .addSnapshotListener(messageListener)
     }
 
+    suspend fun saveRecentResult(userId: String,result: Result):Any{
+        results.document(userId).set(result).await()
+        return Any()
+    }
     private val messageListener: EventListener<QuerySnapshot> = EventListener { value, error ->
         value?.let {
             Log.i(TAG, "EventListener:${it.toString()} ")

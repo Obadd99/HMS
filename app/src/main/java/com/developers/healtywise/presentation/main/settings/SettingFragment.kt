@@ -9,13 +9,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.developers.healtywise.common.helpers.UICommunicationHelper
+import com.developers.healtywise.common.helpers.dialog.CustomDialog
+import com.developers.healtywise.common.helpers.utils.Constants.TAG
+import com.developers.healtywise.common.helpers.utils.snackbar
 import com.developers.healtywise.data.local.dataStore.DataStoreManager
-import com.developers.healtywise.databinding.FragmentHomeBinding
-import com.developers.healtywise.databinding.FragmentLoginBinding
 import com.developers.healtywise.databinding.FragmentSettingBinding
-import com.developers.healtywise.databinding.FragmentSplashBinding
+import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class SettingFragment : Fragment() {
@@ -23,6 +26,8 @@ class SettingFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var uiCommunicationListener: UICommunicationHelper
 
+    @Inject
+    lateinit var auth: FirebaseAuth
     private val navController by lazy { findNavController() }
 
     @Inject
@@ -32,6 +37,8 @@ class SettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupFragmentActions()
+
+
     }
 
     private fun setupFragmentActions() {
@@ -39,9 +46,41 @@ class SettingFragment : Fragment() {
             val action = SettingFragmentDirections.actionSettingFragmentToEditProfileFragment()
             navController.navigate(action)
         }
+        binding.password.setOnClickListener {
+
+            CustomDialog.showDialogForChangePassword(requireContext()) { current, new ->
+                changeUserPassword(current,new){
+                    uiCommunicationListener.isLoading(it)
+                }
+
+            }
+        }
         binding.icBackProfile.setOnClickListener {
             navController.popBackStack()
         }
+    }
+
+    private fun changeUserPassword(current: String, new: String,showLoading:(Boolean)->Unit) {
+        showLoading(true)
+        val currentEmail: String = auth.currentUser?.email ?: ""
+        val credential = EmailAuthProvider.getCredential(currentEmail, current)
+        auth.currentUser?.reauthenticate(credential)?.addOnCompleteListener {
+            if (it.isSuccessful) {
+                auth.currentUser?.updatePassword(new)?.addOnCompleteListener {
+                    if (it.isSuccessful) snackbar("Update password success")
+                    else {
+                        snackbar(it.exception?.localizedMessage ?: "")
+                        Log.i(TAG, "setupFragmentActions: ${it.exception?.localizedMessage}")
+                    }
+                    showLoading(false)
+                }
+            } else {
+                showLoading(false)
+                snackbar("Current password is wrong!")
+                return@addOnCompleteListener
+            }
+        }
+
     }
 
     override fun onCreateView(

@@ -14,14 +14,18 @@ import androidx.navigation.fragment.findNavController
 import com.developers.healtywise.R
 import com.developers.healtywise.common.helpers.HealthyValidation
 import com.developers.healtywise.common.helpers.UICommunicationHelper
+import com.developers.healtywise.common.helpers.dialog.CustomDialog
 import com.developers.healtywise.common.helpers.utils.snackbar
 import com.developers.healtywise.data.local.dataStore.DataStoreManager
 import com.developers.healtywise.databinding.FragmentLoginBinding
 import com.developers.healtywise.domin.models.account.User
 import com.developers.healtywise.presentation.activities.MainActivity
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.async
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class LoginFragment:Fragment() {
@@ -33,6 +37,7 @@ class LoginFragment:Fragment() {
     private val navController by lazy { findNavController() }
     @Inject
     lateinit var dataStoreManager: DataStoreManager
+    @Inject lateinit var auth: FirebaseAuth
     private val loginViewModel:LoginViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,6 +57,18 @@ class LoginFragment:Fragment() {
         }
         binding.tvSignUp.setOnClickListener {
             navController.navigate(R.id.registerFragment)
+        }
+        binding.tvForgetPass.setOnClickListener {
+            CustomDialog.showForgetPasswordDialogue(requireContext()){email->
+               auth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                          snackbar("Successfully sent email verification, please check it  ")
+                        }else{
+                            snackbar(task.exception?.localizedMessage?:"")
+                        }
+                    }
+            }
         }
     }
 

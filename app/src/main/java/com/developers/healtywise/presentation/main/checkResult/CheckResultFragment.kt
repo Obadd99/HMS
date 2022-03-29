@@ -96,7 +96,7 @@ class CheckResultFragment:Fragment() {
             Log.i(Constants.TAG, "onViewCreated: covid: ${userResult.calcDiagnosisForCovid19()}")
             binding.checkResultSuccessLayout.isVisible = true
             binding.layoutContainerCheckResult.isVisible = false
-            delay(3500)
+            delay(3100)
 
             val data= bundleOf("userResult" to userResult)
             navController.navigateSafely(R.id.action_checkResultFragment_to_showUserResultFragment,data)
