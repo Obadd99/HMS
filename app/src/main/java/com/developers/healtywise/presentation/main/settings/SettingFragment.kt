@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.developers.healtywise.R
 import com.developers.healtywise.common.helpers.UICommunicationHelper
 import com.developers.healtywise.common.helpers.dialog.CustomDialog
 import com.developers.healtywise.common.helpers.utils.Constants.TAG
+import com.developers.healtywise.common.helpers.utils.navigateSafely
 import com.developers.healtywise.common.helpers.utils.snackbar
 import com.developers.healtywise.data.local.dataStore.DataStoreManager
 import com.developers.healtywise.databinding.FragmentSettingBinding
@@ -57,6 +59,9 @@ class SettingFragment : Fragment() {
         }
         binding.icBackProfile.setOnClickListener {
             navController.popBackStack()
+        }
+        binding.termsConditions.setOnClickListener {
+            navController.navigateSafely(R.id.action_settingFragment_to_termsFragment)
         }
     }
 

@@ -11,9 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.RequestManager
+import com.developers.healtywise.R
 import com.developers.healtywise.common.helpers.UICommunicationHelper
 import com.developers.healtywise.common.helpers.dialog.CustomDialog
 import com.developers.healtywise.common.helpers.utils.Constants
+import com.developers.healtywise.common.helpers.utils.navigateSafely
+import com.developers.healtywise.common.helpers.utils.shareImageWithText
 import com.developers.healtywise.data.local.dataStore.DataStoreManager
 import com.developers.healtywise.databinding.FragmentEditProfileBinding
 import com.developers.healtywise.databinding.FragmentHomeBinding
@@ -62,12 +65,19 @@ class ProfileFragment : Fragment() {
         binding.icBackProfile.setOnClickListener {
             navController.popBackStack()
         }
+        binding.inviteAFriend.setOnClickListener {
+            binding.root.shareImageWithText()
+
+        }
         binding.logout.setOnClickListener {
             CustomDialog.showDialogForLogout(
                 requireContext()
             ) {
                 logout()
             }
+        }
+        binding.termsConditions.setOnClickListener {
+            navController.navigateSafely(R.id.action_profileFragment_to_termsFragment)
         }
     }
 

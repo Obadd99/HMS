@@ -67,6 +67,9 @@
     <string name="bpm_advice">To maintain your heart rate as normal\no If you smoke, stop.\no Limit your intake of alcohol.\no Limit or stop using caffeine. Some people are sensitive to caffeine and may notice more symptoms when using caffeinated products, such as tea, coffee, colas and some over-the- counter medications.\no Limit or stop using caffeine. Some people are sensitive to caffeine and may notice more symptoms when using caffeinated products,such as tea, coffee, colas and some over-the- counter medications.</string>
 <string name="covid19_advice">You should see doctor as fast as possible.
 </string>
+    <string name="agre_the_terms_and_conditions">I agree to the terms and conditions</string>
+    <string name="must_agre_the_terms_and_conditions">Must Accept the  terms and conditions</string>
+
     <string name="note">Note</string>
     <string name="confirm_borwser_doctor">Browse Doctor</string>
     <string name="are_you_sure_to_change_password">change password!</string>
@@ -74,4 +77,7 @@
     <string name="change_password">Change Password</string>
     <string name="your_email">Your mail</string>
     <string name="new_password">New password</string>
+    <string name="Agree">Agree</string>
+    <string name="cancel">Cancel</string>
+
 </resources>

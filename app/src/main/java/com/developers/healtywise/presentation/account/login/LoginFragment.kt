@@ -86,12 +86,14 @@ class LoginFragment:Fragment() {
             binding.etPassLogin.error = "Password is require"
             snackbar("Password is require")
             false
-        } else if (!HealthyValidation.isValidEmail(email)) {
-            binding.etEmailLogin.requestFocus()
-            binding.etEmailLogin.error = "Email is not valid"
-            snackbar("Email is valid")
-            false
-        } else {
+        }
+//        else if (!HealthyValidation.isValidEmail(email)) {
+//            binding.etEmailLogin.requestFocus()
+//            binding.etEmailLogin.error = "Email is not valid"
+//            snackbar("Email is not valid")
+//            false
+//        }
+        else {
             true
         }
 

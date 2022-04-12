@@ -131,28 +131,7 @@
                     android:layout_marginVertical="@dimen/_10sdp"
                     android:background="@color/dove_gray" />
 
-                <TextView
-                    android:id="@+id/help"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:gravity="start"
-                    android:includeFontPadding="false"
-                    android:text="@string/help"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/_12ssp"
-                    app:drawableEndCompat="@drawable/ic_arrow_back"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/img_user" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:layout_marginVertical="@dimen/_10sdp"
-                    android:background="@color/dove_gray" />
 
                 <TextView
                     android:id="@+id/invite_a_friend"

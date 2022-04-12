@@ -1,4 +1,4 @@
-package com.developers.healtywise.presentation.setup.splash
+package com.developers.healtywise.presentation.general.setup.splash
 
 import android.content.Intent
 import android.os.Bundle

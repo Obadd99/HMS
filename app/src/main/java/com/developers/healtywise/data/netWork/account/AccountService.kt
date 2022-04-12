@@ -207,7 +207,8 @@ class AccountService @Inject constructor(
     }
 
     suspend fun saveRecentResult(userId: String,result: Result):Any{
-        results.document(userId).set(result).await()
+        val checkResultId = UUID.randomUUID().toString()
+        results.document(checkResultId).set(result).await()
         return Any()
     }
     private val messageListener: EventListener<QuerySnapshot> = EventListener { value, error ->

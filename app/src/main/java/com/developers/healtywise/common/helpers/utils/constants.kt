@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 
 
 object Constants {
-    const val NAVIGATE_TO_WEB: String="Go to web site"
+    const val NAVIGATE_TO_WEB: String = "Go to web site"
     const val TAG = "GAMALRAGAB"
 
     const val REQUEST_CODE_READ_EXTERNAL_STORAGE_PERMISSIONS: Int = 123
@@ -16,10 +16,10 @@ object Constants {
     const val ACCEPT_PAYMENT_REQUEST: Int = 217
     const val REQUEST_CODE_CONTACTS_PERMISSIONS = 717
     const val REQUEST_CODE_CAMERA_PERMISSIONS = 111
-    const val REQUEST_CODE_LOCATION_PERMISSIONS: Int=555
+    const val REQUEST_CODE_LOCATION_PERMISSIONS: Int = 555
     const val ACTION_LOGIN_FRAGMENT_AFTER_LOGOUT: String = "ACTION_LOGIN_FRAGMENT_AFTER_LOGOUT"
     const val ACTION_NEW_MESSAGE_SENT: String = "ACTION_NEW_MESSAGE_SENT"
-    const val HOLDER_ICON="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+    const val HOLDER_ICON = "https://cdn-icons-png.flaticon.com/512/149/149071.png"
 
     const val USERS_INFO_FILE: String = "USER_INFO"
     const val USERS: String = "Users"
@@ -27,21 +27,18 @@ object Constants {
     const val MESSAGES: String = "Chats"
     const val RECENT_CONVERSATION: String = "RecentConversation"
     const val RESULTS: String = "Results"
-    const val API_KEY="7hnvpxbuuvjb"
+    const val API_KEY = "7hnvpxbuuvjb"
 
 
     const val BASE_URL = ""
 
 
 
-    const val BASE_URL_NOTIFICATION = "https://fcm.googleapis.com"
+        const val BASE_URL_NOTIFICATION = "https://fcm.googleapis.com"
     const val SERVER_KEY =
         "AAAAfJQP7zE:APA91bGVBwaBpzMXCTXYQsDfYXqGQ-S28-YO6apvxE9NaaO8uJUIEdI04guneHC3qw2F3ExeqyrHdPbS96FJFbmlsnT-oKDnjuprs4sIuLzud0MXeBgSd52nOrfBQusF51572LNzmrOQ"
     const val CONTENT_TYPE = "application/json"
     const val TOPIC = "/topics/myTopic2"
-
-
-
 
 
     /*
@@ -62,13 +59,10 @@ object Constants {
     val USER_DOCTOR = booleanPreferencesKey("USER_DOCTOR")
 
 
-
-
     const val LOCATION_UPDATE_INTERVAL = 5000L
     const val FASTEST_LOCATION_INTERVAL = 2000L
     const val TIMER_UPDATE_INTERVAL = 500L
     const val SEARCH_TIME_DELAY = 500L
-
 
 
 }

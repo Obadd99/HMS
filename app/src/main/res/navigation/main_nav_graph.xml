@@ -42,6 +42,9 @@
         <action
             android:id="@+id/action_settingFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_termsFragment"
+            app:destination="@id/termsFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -50,7 +53,11 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.developers.healtywise.presentation.account.userProfile.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_termsFragment"
+            app:destination="@id/termsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.developers.healtywise.presentation.main.chat.ChatFragment"
@@ -76,4 +83,8 @@
             android:name="userResult"
             app:argType="com.developers.healtywise.domin.models.main.CheckResult" />
     </fragment>
+    <fragment
+        android:id="@+id/termsFragment"
+        android:name="com.developers.healtywise.presentation.general.TermsFragment"
+        android:label="TermsFragment" />
 </navigation>

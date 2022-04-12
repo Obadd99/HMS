@@ -1,4 +1,4 @@
-package com.developers.healtywise.presentation.setup.splash
+package com.developers.healtywise.presentation.general.setup.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

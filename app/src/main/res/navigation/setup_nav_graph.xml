@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.developers.healtywise.presentation.setup.splash.SplashFragment"
+        android:name="com.developers.healtywise.presentation.general.setup.splash.SplashFragment"
         android:label="SplashFragment" >
         <action
             android:id="@+id/action_splashFragment_to_loginFragment"
@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_registerFragment_to_passwordSignupFragment"
             app:destination="@id/passwordSignupFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_termsFragment2"
+            app:destination="@id/termsFragment2" />
     </fragment>
     <fragment
         android:id="@+id/passwordSignupFragment"
@@ -36,4 +39,8 @@
             android:name="user"
             app:argType="com.developers.healtywise.domin.models.account.User" />
     </fragment>
+    <fragment
+        android:id="@+id/termsFragment2"
+        android:name="com.developers.healtywise.presentation.general.TermsFragment"
+        android:label="TermsFragment" />
 </navigation>

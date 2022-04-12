@@ -1,6 +1,12 @@
 package com.developers.healtywise.common.helpers.utils
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.View
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import com.developers.goldady.common.helpers.utils.hideKeyboard
@@ -39,7 +45,24 @@ fun deleteBackStakeAfterNavigate2(fragmentId1: Int,fragmentId2: Int) = NavOption
     .setPopUpTo(fragmentId2, true)
     .build()
 
+fun View.shareImageWithText() {
+    val msg = StringBuilder()
+    msg.append("Hey, Download this awesome app!")
+    msg.append("\n")
+    msg.append("https://play.google.com/store/apps/details?id=${context.packageName}") //example :com.package.name
+        val shareIntent = Intent()
+        shareIntent.action = Intent.ACTION_SEND
+        shareIntent.type = "*/*"
+        shareIntent.putExtra(Intent.EXTRA_TEXT, msg.toString())
+        try {
+            context.startActivity(Intent.createChooser(shareIntent, "Share via"))
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(context,
+                "No App Available",
+                Toast.LENGTH_SHORT).show()
+        }
 
+}
 
 
 

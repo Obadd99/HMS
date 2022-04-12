@@ -21,6 +21,7 @@ import com.developers.healtywise.R
 import com.developers.healtywise.common.helpers.HealthyValidation
 import com.developers.healtywise.common.helpers.utils.Constants.REQUEST_CODE_READ_EXTERNAL_STORAGE_PERMISSIONS
 import com.developers.healtywise.common.helpers.utils.PermissionsUtility
+import com.developers.healtywise.common.helpers.utils.navigateSafely
 import com.developers.healtywise.common.helpers.utils.snackbar
 import com.developers.healtywise.databinding.FragmentSignUpCreationDataBinding
 import com.developers.healtywise.domin.models.account.User
@@ -109,6 +110,9 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener,
         }
         binding.openGallery.setOnClickListener {
             requestPermissions()
+        }
+        binding.tvPolicy.setOnClickListener {
+            navController.navigateSafely(R.id.action_registerFragment_to_termsFragment2)
         }
     }
 
