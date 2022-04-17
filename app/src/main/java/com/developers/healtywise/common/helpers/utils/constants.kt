@@ -27,7 +27,7 @@ object Constants {
     const val MESSAGES: String = "Chats"
     const val RECENT_CONVERSATION: String = "RecentConversation"
     const val RESULTS: String = "Results"
-    const val API_KEY = "7hnvpxbuuvjb"
+    const val API_KEY = "cg3hymfkv4s8"
 
 
     const val BASE_URL = ""
