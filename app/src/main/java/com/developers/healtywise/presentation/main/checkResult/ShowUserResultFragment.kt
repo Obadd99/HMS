@@ -66,7 +66,8 @@ class ShowUserResultFragment : Fragment() {
     }
 
     private fun navigateToMainActivity() {
-        startActivity(Intent(requireContext(), MainActivity::class.java).setAction(Constants.NAVIGATE_TO_WEB))
+        startActivity(Intent(requireContext(),
+            MainActivity::class.java).setAction(Constants.NAVIGATE_TO_WEB))
         requireActivity().finish()
     }
 
@@ -75,15 +76,17 @@ class ShowUserResultFragment : Fragment() {
         binding.sendBrowserBtn.setOnClickListener {
 
             val note = binding.tvNoteValue.text.toString()
-            val result = Result(userInfo.userId,
-                userResult.spo1,
-                userResult.temp,
-                userResult.bpm,
-                userResult.calcDiagnosisForSpo2(),
-                userResult.calcDiagnosisForTem(),
-                userResult.calcDiagnosisForBPM(),
-                userResult.calcDiagnosisForCovid19(),
-                note, System.currentTimeMillis())
+            val result = Result(
+                userId = userInfo.userId,
+                spo2 = userResult.spo1,
+                temp = userResult.temp,
+                bpm = userResult.bpm,
+                spo2Case = userResult.calcDiagnosisForSpo2(),
+                tempCase = userResult.calcDiagnosisForTem(),
+                bpmCase = userResult.calcDiagnosisForBPM(),
+                haveCovid19 = userResult.calcDiagnosisForCovid19(),
+                note = note, 
+                date = System.currentTimeMillis())
             saveResultViewModel.saveResult(userInfo.userId, result)
         }
     }

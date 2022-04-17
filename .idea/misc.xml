@@ -8,15 +8,22 @@
         <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/drawable/checkbox_selector_day.xml" value="0.167" />
         <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/drawable/checked_faild.xml" value="0.167" />
         <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/drawable/checked_success.xml" value="0.167" />
+        <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/drawable/ic_add.xml" value="0.1695" />
+        <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/drawable/ic_arrow_round_back.xml" value="0.1695" />
+        <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/drawable/ic_baseline_camera_alt_24.xml" value="0.1695" />
         <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.167" />
         <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/drawable/ic_right_arrow.xml" value="0.167" />
+        <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/layout/activity_setup.xml" value="0.20683832840861122" />
         <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/layout/change_password_dialoge.xml" value="0.20607097050021378" />
         <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/layout/forget_password_dialoge.xml" value="0.20607097050021378" />
         <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/layout/fragment_check_result.xml" value="0.25" />
+        <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/layout/fragment_home.xml" value="0.20683832840861122" />
         <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/layout/fragment_login.xml" value="0.20607097050021378" />
         <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/layout/fragment_profile.xml" value="0.20607097050021378" />
         <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/layout/fragment_setting.xml" value="0.20607097050021378" />
         <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/layout/fragment_show_user_result.xml" value="0.25" />
+        <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/layout/fragment_sign_up_creation_data.xml" value="0.20683832840861122" />
+        <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/layout/fragment_splash.xml" value="0.20949123557075675" />
         <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/layout/fragment_terms_condition.xml" value="0.20607097050021378" />
         <entry key="..\:/FreeLancer/Healtywise/app/src/main/res/layout/item_container_slider_image.xml" value="0.20607097050021378" />
         <entry key="..\:/Healtywise/app/src/main/res/drawable-anydpi/ic_checked_box.xml" value="0.2305" />

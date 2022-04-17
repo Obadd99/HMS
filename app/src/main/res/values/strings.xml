@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Healtywise</string>
+    <string name="app_name">HMS</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="forgot_your_password"><u>Forgot your password?</u></string>
@@ -79,5 +79,6 @@
     <string name="new_password">New password</string>
     <string name="Agree">Agree</string>
     <string name="cancel">Cancel</string>
+    <string name="health_monitoring_system">Health Monitoring System</string>
 
 </resources>
