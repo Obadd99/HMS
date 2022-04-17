@@ -34,6 +34,8 @@
     <string name="sign_up_btn">SiGN UP</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="personal_info">Personal Info</string>
+    <string name="health_monitoring_system"><b><u><font color='#303F9F'>H</font></u></b>ealth <b><u><font color='#303F9F'>M</font></u></b>onitoring <b><u><font color='#303F9F'>S</font></u></b>ystem</string>
+
     <string name="work_imprevement_service"><b><u><font color='#303F9F'>W</font></u></b>ork <font color='#303F9F'><b><u>I</u></b></font>mprovement <font color='#303F9F'><b><u>S</u></b></font>ervice</string>
     <string name="update">Update</string>
     <string name="message">Message</string>
@@ -79,6 +81,6 @@
     <string name="new_password">New password</string>
     <string name="Agree">Agree</string>
     <string name="cancel">Cancel</string>
-    <string name="health_monitoring_system">Health Monitoring System</string>
+    <string name="HMS">HMS</string>
 
 </resources>
