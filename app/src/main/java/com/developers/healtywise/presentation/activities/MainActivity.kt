@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
                 }
             }else if(it.action==NAVIGATE_TO_WEB){
 
-                val  browserIntent =  Intent(Intent.ACTION_VIEW, Uri.parse("https://health-wise.netlify.app"));
+                val  browserIntent =  Intent(Intent.ACTION_VIEW, Uri.parse("https://h-wise.netlify.app/"));
                 startActivity(browserIntent);
             }else{
 
@@ -189,6 +189,8 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
                     Log.i(TAG, "setupChatClient: setup channels")
                 } else {
                     binding.root snackbar (result.error().message.toString())
+                    Log.i(TAG, "setupChatClient: ${result.error().message.toString()}")
+                    Log.i(TAG, "setupChatClient: ${result.error().cause.toString()}")
                 }
             }
         }

@@ -173,7 +173,7 @@
                 android:background="@null"
                 android:textColor="@color/colorPrimary"
                 android:includeFontPadding="false"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:padding="@dimen/_12ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -197,7 +197,7 @@
                 android:background="@null"
                 android:textColor="@color/colorPrimary"
                 android:includeFontPadding="false"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:padding="@dimen/_12ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -221,7 +221,7 @@
                 android:background="@null"
                 android:textColor="@color/colorPrimary"
                 android:includeFontPadding="false"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:padding="@dimen/_12ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 

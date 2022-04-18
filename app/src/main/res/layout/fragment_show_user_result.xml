@@ -105,13 +105,13 @@
             app:layout_constraintTop_toBottomOf="@id/result_header"
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_semibold"
 
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:layout_marginHorizontal="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
-            android:fontFamily="@font/poppins_bold"
-            android:textSize="@dimen/_13ssp"
+            android:textSize="@dimen/_11ssp"
             android:text="Normal Spo2 in human body"
             />
         <TextView
@@ -137,8 +137,8 @@
             android:textColor="@color/black"
             android:layout_marginHorizontal="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
-            android:fontFamily="@font/poppins_bold"
-            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="@dimen/_11ssp"
             android:text="Your SPo2"
             />
         <TextView
@@ -164,8 +164,8 @@
             android:textColor="@color/black"
             android:layout_marginHorizontal="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
-            android:fontFamily="@font/poppins_bold"
-            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="@dimen/_11ssp"
             android:text="Diagnosis"
             />
         <TextView
@@ -191,8 +191,8 @@
             app:layout_constraintTop_toTopOf="@+id/tv_value_advice_spo2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/tv_value_advice_spo2"
-            android:fontFamily="@font/poppins_bold"
-            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="@dimen/_11ssp"
             android:text="Advice"
             />
         <TextView
@@ -230,9 +230,9 @@
             android:textColor="@color/black"
             android:layout_marginHorizontal="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
-            android:fontFamily="@font/poppins_bold"
-            android:textSize="@dimen/_13ssp"
-            android:text="Normal Temprature in human body"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="@dimen/_11ssp"
+            android:text="Normal Temprature in body"
             />
         <TextView
             android:id="@+id/tv_normal_value_temp"
@@ -258,8 +258,8 @@
             android:textColor="@color/black"
             android:layout_marginHorizontal="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
-            android:fontFamily="@font/poppins_bold"
-            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="@dimen/_11ssp"
             android:text="Your Temprature"
             />
         <TextView
@@ -285,8 +285,8 @@
             android:textColor="@color/black"
             android:layout_marginHorizontal="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
-            android:fontFamily="@font/poppins_bold"
-            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="@dimen/_11ssp"
             android:text="Diagnosis"
             />
         <TextView
@@ -312,8 +312,8 @@
             app:layout_constraintTop_toTopOf="@+id/tv_value_advice_temp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/tv_value_advice_temp"
-            android:fontFamily="@font/poppins_bold"
-            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="@dimen/_11ssp"
             android:text="Advice"
             />
         <TextView
@@ -351,9 +351,9 @@
             android:textColor="@color/black"
             android:layout_marginHorizontal="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
-            android:fontFamily="@font/poppins_bold"
-            android:textSize="@dimen/_13ssp"
-            android:text="Normal heart rate in human body"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="@dimen/_11ssp"
+            android:text="Normal heart rate in body"
             />
         <TextView
             android:id="@+id/tv_normal_value_bpm"
@@ -379,8 +379,8 @@
             android:textColor="@color/black"
             android:layout_marginHorizontal="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
-            android:fontFamily="@font/poppins_bold"
-            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="@dimen/_11ssp"
             android:text="Your heart rate"
             />
         <TextView
@@ -406,8 +406,8 @@
             android:textColor="@color/black"
             android:layout_marginHorizontal="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
-            android:fontFamily="@font/poppins_bold"
-            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="@dimen/_11ssp"
             android:text="Diagnosis"
             />
         <TextView
@@ -433,8 +433,8 @@
             app:layout_constraintTop_toTopOf="@+id/tv_value_advice_bpm"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/tv_value_advice_bpm"
-            android:fontFamily="@font/poppins_bold"
-            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="@dimen/_11ssp"
             android:text="Advice"
             />
         <TextView
@@ -485,8 +485,8 @@
                 app:layout_constraintTop_toTopOf="@+id/tv_value_advice_bpm"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_value_advice_bpm"
-                android:fontFamily="@font/poppins_bold"
-                android:textSize="@dimen/_13ssp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/_11ssp"
                 android:text="Diagnosis"
                 android:layout_gravity="center"
 
@@ -520,8 +520,8 @@
                 app:layout_constraintTop_toTopOf="@+id/tv_value_advice_bpm"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_value_advice_bpm"
-                android:fontFamily="@font/poppins_bold"
-                android:textSize="@dimen/_13ssp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/_11ssp"
                 android:text="Advice"
 
                 />
