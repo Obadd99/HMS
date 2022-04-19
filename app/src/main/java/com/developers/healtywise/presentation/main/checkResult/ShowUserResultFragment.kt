@@ -17,6 +17,7 @@ import com.bumptech.glide.RequestManager
 import com.developers.healtywise.R
 import com.developers.healtywise.common.helpers.UICommunicationHelper
 import com.developers.healtywise.common.helpers.utils.Constants
+import com.developers.healtywise.common.helpers.utils.Constants.TAG
 import com.developers.healtywise.common.helpers.utils.snackbar
 import com.developers.healtywise.data.local.dataStore.DataStoreManager
 import com.developers.healtywise.databinding.FragmentShowUserResultBinding
@@ -87,6 +88,7 @@ class ShowUserResultFragment : Fragment() {
                 haveCovid19 = userResult.calcDiagnosisForCovid19(),
                 note = note, 
                 date = System.currentTimeMillis())
+            Log.i(TAG, "fragmentActions: ${result.toString()}")
             saveResultViewModel.saveResult(userInfo.userId, result)
         }
     }

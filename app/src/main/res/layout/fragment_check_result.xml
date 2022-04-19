@@ -172,6 +172,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:textColor="@color/colorPrimary"
+                android:maxLength="5"
                 android:includeFontPadding="false"
                 android:inputType="numberDecimal"
                 android:padding="@dimen/_12ssp" />
@@ -195,6 +196,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:maxLength="5"
+
                 android:textColor="@color/colorPrimary"
                 android:includeFontPadding="false"
                 android:inputType="numberDecimal"
@@ -219,6 +222,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:maxLength="5"
+
                 android:textColor="@color/colorPrimary"
                 android:includeFontPadding="false"
                 android:inputType="numberDecimal"
