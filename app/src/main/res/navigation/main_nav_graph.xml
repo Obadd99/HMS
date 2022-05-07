@@ -7,6 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
+        tools:layout="@layout/fragment_home"
         android:name="com.developers.healtywise.presentation.main.home.HomeFragment"
         android:label="HomeFragment" >
         <action
@@ -21,6 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/messageFragment"
+        tools:layout="@layout/fragment_message"
         android:name="com.developers.healtywise.presentation.main.message.MessageFragment"
         android:label="MessageFragment" >
         <action
@@ -29,6 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
+        tools:layout="@layout/fragment_search_doctor"
         android:name="com.developers.healtywise.presentation.main.search.SearchFragment"
         android:label="SearchFragment" >
         <action
@@ -37,6 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
+        tools:layout="@layout/fragment_setting"
         android:name="com.developers.healtywise.presentation.main.settings.SettingFragment"
         android:label="SettingFragment" >
         <action
@@ -48,10 +52,12 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
+        tools:layout="@layout/fragment_edit_profile"
         android:name="com.developers.healtywise.presentation.account.editProfile.EditProfileFragment"
         android:label="EditProfileFragment" />
     <fragment
         android:id="@+id/profileFragment"
+        tools:layout="@layout/fragment_profile"
         android:name="com.developers.healtywise.presentation.account.userProfile.ProfileFragment"
         android:label="ProfileFragment" >
         <action
@@ -60,6 +66,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
+        tools:layout="@layout/fragment_chat"
         android:name="com.developers.healtywise.presentation.main.chat.ChatFragment"
         android:label="ChatFragment" >
         <argument
@@ -77,6 +84,7 @@
     </fragment>
     <fragment
         android:id="@+id/showUserResultFragment"
+        tools:layout="@layout/fragment_show_user_result"
         android:name="com.developers.healtywise.presentation.main.checkResult.ShowUserResultFragment"
         android:label="ShowUserResultFragment" >
         <argument
@@ -85,6 +93,7 @@
     </fragment>
     <fragment
         android:id="@+id/termsFragment"
+        tools:layout="@layout/fragment_terms_condition"
         android:name="com.developers.healtywise.presentation.general.TermsFragment"
         android:label="TermsFragment" />
 </navigation>

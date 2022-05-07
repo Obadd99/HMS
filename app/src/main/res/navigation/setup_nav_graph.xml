@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/setup_nav_graph.xml"
     app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/splashFragment"
+        tools:layout="@layout/fragment_splash"
         android:name="com.developers.healtywise.presentation.general.setup.splash.SplashFragment"
         android:label="SplashFragment" >
         <action
@@ -14,6 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
+        tools:layout="@layout/fragment_login"
         android:name="com.developers.healtywise.presentation.account.login.LoginFragment"
         android:label="LoginFragment" >
         <action
@@ -22,6 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
+        tools:layout="@layout/fragment_sign_up_creation_data"
         android:name="com.developers.healtywise.presentation.account.register.RegisterFragment"
         android:label="RegisterFragment" >
         <action
@@ -33,6 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/passwordSignupFragment"
+        tools:layout="@layout/fragment_sign_up_password"
         android:name="com.developers.healtywise.presentation.account.password.PasswordSignupFragment"
         android:label="PasswordSignupFragment" >
         <argument
@@ -41,6 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/termsFragment2"
+        tools:layout="@layout/fragment_terms_condition"
         android:name="com.developers.healtywise.presentation.general.TermsFragment"
         android:label="TermsFragment" />
 </navigation>

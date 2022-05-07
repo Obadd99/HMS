@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity(), UICommunicationHelper, AddPostCommunic
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+                setContentView(binding.root)
         statusBar(R.color.colorPrimary)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_NOSENSOR
 
